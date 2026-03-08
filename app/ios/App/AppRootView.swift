@@ -5,12 +5,12 @@ struct AppRootView: View {
     @StateObject private var languageSettings = LanguageSettings()
     private let container: AppContainer
     @StateObject private var sessionsViewModel: SessionsViewModel
-    @StateObject private var paymentsViewModel: PaymentsViewModel
+    @StateObject private var historyViewModel: HistoryViewModel
 
     init(container: AppContainer = AppContainer()) {
         self.container = container
         _sessionsViewModel = StateObject(wrappedValue: SessionsViewModel(service: container.service))
-        _paymentsViewModel = StateObject(wrappedValue: PaymentsViewModel(service: container.service))
+        _historyViewModel = StateObject(wrappedValue: HistoryViewModel(service: container.service, currentUserID: nil))
     }
 
     var body: some View {
@@ -20,16 +20,23 @@ struct AppRootView: View {
                     SessionListView(
                         viewModel: sessionsViewModel,
                         service: container.service,
-                        currentUserID: appState.currentUser?.id,
-                        onSignOut: signOut
+                        currentUserID: appState.currentUser?.id
                     )
                     .tabItem {
                         Label("sessions.title", systemImage: "calendar")
                     }
 
-                    PaymentsView(viewModel: paymentsViewModel)
+                    HistoryView(viewModel: historyViewModel)
+                    .tabItem {
+                        Label("history.title", systemImage: "clock.arrow.circlepath")
+                    }
+
+                    SettingsView(
+                        currentUser: appState.currentUser,
+                        onSignOut: signOut
+                    )
                         .tabItem {
-                            Label("payments.title", systemImage: "creditcard")
+                            Label("settings.title", systemImage: "gearshape")
                         }
                 }
             } else {
@@ -37,6 +44,9 @@ struct AppRootView: View {
                     viewModel: AuthViewModel(service: container.service, appState: appState)
                 )
             }
+        }
+        .task(id: appState.currentUser?.id) {
+            historyViewModel.setCurrentUserID(appState.currentUser?.id)
         }
         .environmentObject(languageSettings)
         .environment(\.locale, languageSettings.locale)

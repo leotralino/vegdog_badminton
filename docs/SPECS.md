@@ -52,6 +52,18 @@ Build an iOS app for badminton friends to organize sessions with queue sign-up (
   - finalize roster (`finalize_at`)
   - mark participant `stayed_late`
   - add other session admins
+- MVP queue UI behavior:
+  - Tab layout: `Queue`, `History`, `Settings`
+  - Queue detail shows session meta (time/location/admin)
+  - Participant list is vertical with clear split:
+    - within `max participants`
+    - waitlist / standby
+  - One user can create multiple queue entries (for friends)
+    - first default name: own nickname
+    - repeated joins default to `nickname +N`
+  - Entry removal is per-entry via `-` action on entries created by the current user
+  - Withdrawn entries appear in a bottom withdrawn panel
+  - Rejoin with same entry name removes it from withdrawn panel
 
 
 ### 3.3 Payment
@@ -64,6 +76,8 @@ Build an iOS app for badminton friends to organize sessions with queue sign-up (
   - `unpaid`
   - `paid`
   - `waived`
+- MVP information architecture note:
+  - Payment configuration lives under `Settings` tab instead of a standalone `Payments` tab.
 
 ## 4. Add-on Features (Phase 2)
 

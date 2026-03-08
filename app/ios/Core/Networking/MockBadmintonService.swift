@@ -118,15 +118,17 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         return updated
     }
 
-    func joinSession(sessionID: String) async throws -> SessionParticipant {
+    func joinSession(sessionID: String, entryName: String?) async throws -> SessionParticipant {
         guard let session = sessions.first(where: { $0.id == sessionID }) else {
             throw APIError.httpError(statusCode: 404, message: "Session not found")
         }
         let user = ensureCurrentUser()
         var participants = participantsBySessionID[sessionID] ?? []
-
-        if let existing = participants.first(where: { $0.user.id == user.id && ($0.status == .joined || $0.status == .waitlist) }) {
-            return existing
+        let resolvedName = normalizedEntryName(entryName, fallback: user.nickname)
+        participants.removeAll {
+            $0.ownerUserID == user.id &&
+            ($0.status == .withdrawn || $0.status == .lateWithdraw) &&
+            $0.displayName == resolvedName
         }
 
         let queuePosition = (participants.map(\.queuePosition).max() ?? 0) + 1
@@ -137,6 +139,8 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             id: UUID().uuidString,
             sessionID: sessionID,
             user: user,
+            entryName: resolvedName,
+            createdByUserID: user.id,
             queuePosition: queuePosition,
             status: status,
             joinedAt: Date(),
@@ -146,11 +150,12 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             stayedLate: false
         )
         participants.append(participant)
+        participants = recomputeQueueStatuses(participants, maxParticipants: session.maxParticipants)
         participantsBySessionID[sessionID] = participants
-        return participant
+        return participants.first(where: { $0.id == participant.id }) ?? participant
     }
 
-    func withdrawSession(sessionID: String) async throws -> WithdrawResult {
+    func withdrawParticipant(sessionID: String, participantID: String) async throws -> WithdrawResult {
         let user = ensureCurrentUser()
         guard let session = sessions.first(where: { $0.id == sessionID }) else {
             throw APIError.httpError(statusCode: 404, message: "Session not found")
@@ -158,11 +163,15 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         guard var participants = participantsBySessionID[sessionID] else {
             throw APIError.httpError(statusCode: 404, message: "No participants")
         }
-        guard let index = participants.firstIndex(where: { $0.user.id == user.id && ($0.status == .joined || $0.status == .waitlist) }) else {
+        guard let index = participants.firstIndex(where: { $0.id == participantID && ($0.status == .joined || $0.status == .waitlist) }) else {
             throw APIError.httpError(statusCode: 404, message: "Participant not found")
         }
 
         let old = participants[index]
+        guard old.ownerUserID == user.id else {
+            throw APIError.httpError(statusCode: 403, message: "You can only remove entries you created.")
+        }
+
         let late = Date() > session.withdrawDeadline
         let updatedStatus: ParticipantStatus = late ? .lateWithdraw : .withdrawn
         let liable = late
@@ -172,6 +181,8 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             id: old.id,
             sessionID: old.sessionID,
             user: old.user,
+            entryName: old.entryName,
+            createdByUserID: old.ownerUserID,
             queuePosition: old.queuePosition,
             status: updatedStatus,
             joinedAt: old.joinedAt,
@@ -181,6 +192,7 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             stayedLate: old.stayedLate
         )
         participants[index] = updated
+        participants = recomputeQueueStatuses(participants, maxParticipants: session.maxParticipants)
         participantsBySessionID[sessionID] = participants
 
         return WithdrawResult(
@@ -258,6 +270,8 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             id: old.id,
             sessionID: old.sessionID,
             user: old.user,
+            entryName: old.entryName,
+            createdByUserID: old.ownerUserID,
             queuePosition: old.queuePosition,
             status: old.status,
             joinedAt: old.joinedAt,
@@ -364,6 +378,39 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         currentUser = fallback
         userDirectory[fallback.id] = fallback
         return fallback
+    }
+
+    private func normalizedEntryName(_ entryName: String?, fallback: String) -> String {
+        let trimmed = entryName?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return trimmed.isEmpty ? fallback : trimmed
+    }
+
+    private func recomputeQueueStatuses(_ participants: [SessionParticipant], maxParticipants: Int) -> [SessionParticipant] {
+        let sorted = participants.sorted { $0.queuePosition < $1.queuePosition }
+        var activeIndex = 0
+
+        return sorted.map { participant in
+            guard participant.status == .joined || participant.status == .waitlist else {
+                return participant
+            }
+
+            defer { activeIndex += 1 }
+            let nextStatus: ParticipantStatus = activeIndex < maxParticipants ? .joined : .waitlist
+            return SessionParticipant(
+                id: participant.id,
+                sessionID: participant.sessionID,
+                user: participant.user,
+                entryName: participant.entryName,
+                createdByUserID: participant.ownerUserID,
+                queuePosition: participant.queuePosition,
+                status: nextStatus,
+                joinedAt: participant.joinedAt,
+                withdrewAt: participant.withdrewAt,
+                isReplacement: participant.isReplacement,
+                replacedParticipantID: participant.replacedParticipantID,
+                stayedLate: participant.stayedLate
+            )
+        }
     }
 
     private func seedData() {

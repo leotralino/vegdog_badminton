@@ -54,9 +54,27 @@
 "sessions.detail.section_actions" = "Actions";
 "sessions.detail.section_participants" = "Participants";
 "sessions.detail.no_participants" = "No participants";
+"sessions.detail.waitlist" = "Standby / Waitlist";
+"sessions.detail.withdrawn" = "Withdrawn";
+"sessions.detail.withdrawn_normal" = "Withdrawn";
+"sessions.detail.withdrawn_late" = "Late Withdraw";
 "sessions.detail.participant_status" = "Status";
 "sessions.detail.stayed_late_yes" = "Stayed Late: Yes";
 "sessions.detail.stayed_late_no" = "Stayed Late: No";
+
+"history.title" = "History";
+"history.loading" = "Loading history...";
+"history.participated" = "Sessions I Joined";
+"history.past" = "Past Sessions";
+"history.empty" = "No records";
+
+"settings.title" = "Settings";
+"settings.profile" = "Profile";
+"settings.avatar" = "Avatar URL";
+"settings.nickname" = "Nickname";
+"settings.payment" = "Payment";
+"settings.payment_info" = "Payment Info (Venmo/Zelle/WeChat)";
+"settings.account" = "Account";
 
 "payments.title" = "Payments";
 "payments.section_session" = "Session";

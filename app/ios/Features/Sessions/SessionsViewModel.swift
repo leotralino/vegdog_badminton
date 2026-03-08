@@ -26,16 +26,7 @@ final class SessionsViewModel: ObservableObject {
 
     func join(sessionID: String) async {
         do {
-            _ = try await service.joinSession(sessionID: sessionID)
-            await loadSessions()
-        } catch {
-            errorMessage = error.localizedDescription
-        }
-    }
-
-    func withdraw(sessionID: String) async {
-        do {
-            _ = try await service.withdrawSession(sessionID: sessionID)
+            _ = try await service.joinSession(sessionID: sessionID, entryName: nil)
             await loadSessions()
         } catch {
             errorMessage = error.localizedDescription

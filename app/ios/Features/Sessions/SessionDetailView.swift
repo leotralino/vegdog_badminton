@@ -8,94 +8,83 @@ struct SessionDetailView: View {
             if viewModel.isLoading && viewModel.detail == nil {
                 ProgressView("sessions.detail.loading")
             } else if let detail = viewModel.detail {
-                List {
-                    Section("sessions.detail.section_session") {
-                        Text(detail.title)
-                            .font(.headline)
-                        Text("\(detail.location) · \(detail.startsAt.formatted(date: .abbreviated, time: .shortened))")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                        Text("\(String(localized: "sessions.detail.status")): \(detail.status.rawValue)")
-                            .font(.footnote)
-                        Text("\(String(localized: "sessions.detail.withdraw_deadline")): \(detail.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
-                            .font(.footnote)
-                        Text("\(String(localized: "sessions.detail.initiator")): \(detail.initiatorUser.nickname)")
-                            .font(.footnote)
-                    }
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 16) {
+                        SessionMetaCard(detail: detail)
 
-                    Section("sessions.detail.section_admins") {
-                        ForEach(detail.admins) { admin in
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(admin.nickname)
-                                    .font(.subheadline.weight(.semibold))
-                                Text(admin.userID)
-                                    .font(.footnote)
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("sessions.detail.section_participants")
+                                .font(.headline)
+
+                            if activeParticipants(detail).isEmpty {
+                                Text("sessions.detail.no_participants")
                                     .foregroundStyle(.secondary)
-                            }
-                        }
+                            } else {
+                                let joined = joinedParticipants(detail)
+                                let waitlist = waitlistParticipants(detail)
 
-                        if viewModel.isCurrentUserAdmin {
-                            TextField("sessions.detail.new_admin_user_id", text: $viewModel.newAdminUserID)
-                                .textInputAutocapitalization(.never)
-                                .autocorrectionDisabled(true)
-                            TextField("sessions.detail.new_admin_nickname", text: $viewModel.newAdminNickname)
-                            Button("sessions.detail.add_admin") {
-                                Task { await viewModel.addAdmin() }
-                            }
-                        } else {
-                            Text("sessions.detail.only_admin_add")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
+                                ForEach(joined) { participant in
+                                    QueueParticipantRow(
+                                        participant: participant,
+                                        isAdmin: isAdminEntry(detail: detail, participant: participant),
+                                        canRemove: canRemove(participant),
+                                        onRemove: {
+                                            Task { await viewModel.removeEntry(participantID: participant.id) }
+                                        }
+                                    )
+                                }
 
-                    Section("sessions.detail.section_actions") {
-                        HStack {
-                            Button("sessions.join") { Task { await viewModel.join() } }
-                                .buttonStyle(.borderedProminent)
-                            Button("sessions.withdraw") { Task { await viewModel.withdraw() } }
-                                .buttonStyle(.bordered)
-                            Button("sessions.finalize") { Task { await viewModel.finalize() } }
-                                .buttonStyle(.bordered)
-                                .disabled(!viewModel.isCurrentUserAdmin)
-                        }
-                    }
-
-                    Section("sessions.detail.section_participants") {
-                        if detail.participants.isEmpty {
-                            Text("sessions.detail.no_participants")
-                                .foregroundStyle(.secondary)
-                        } else {
-                            ForEach(detail.participants) { participant in
-                                VStack(alignment: .leading, spacing: 6) {
-                                    Text(participant.user.nickname)
-                                        .font(.subheadline.weight(.semibold))
-                                    Text("\(String(localized: "sessions.detail.participant_status")): \(participant.status.rawValue) · #\(participant.queuePosition)")
+                                if !waitlist.isEmpty {
+                                    Divider()
+                                    Text("sessions.detail.waitlist")
                                         .font(.footnote)
                                         .foregroundStyle(.secondary)
-                                    Button {
-                                        guard viewModel.isCurrentUserAdmin else { return }
-                                        Task {
-                                            await viewModel.updateStayedLate(
-                                                participantID: participant.id,
-                                                stayedLate: !participant.stayedLate
-                                            )
-                                        }
-                                    } label: {
-                                        Label(
-                                            participant.stayedLate
-                                                ? String(localized: "sessions.detail.stayed_late_yes")
-                                                : String(localized: "sessions.detail.stayed_late_no"),
-                                            systemImage: participant.stayedLate ? "checkmark.circle.fill" : "circle"
+                                    ForEach(waitlist) { participant in
+                                        QueueParticipantRow(
+                                            participant: participant,
+                                            isAdmin: isAdminEntry(detail: detail, participant: participant),
+                                            canRemove: canRemove(participant),
+                                            onRemove: {
+                                                Task { await viewModel.removeEntry(participantID: participant.id) }
+                                            }
                                         )
-                                        .font(.footnote)
                                     }
-                                    .buttonStyle(.plain)
-                                    .disabled(!viewModel.isCurrentUserAdmin)
                                 }
-                                .padding(.vertical, 2)
                             }
                         }
+                        .padding(14)
+                        .background(.thinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+
+                        if !withdrawnParticipants(detail).isEmpty {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("sessions.detail.withdrawn")
+                                    .font(.headline)
+                                ForEach(withdrawnParticipants(detail)) { participant in
+                                    HStack {
+                                        Text(participant.displayName)
+                                        Spacer()
+                                        Text(
+                                            participant.status == .lateWithdraw
+                                                ? String(localized: "sessions.detail.withdrawn_late")
+                                                : String(localized: "sessions.detail.withdrawn_normal")
+                                        )
+                                            .font(.footnote)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                }
+                            }
+                            .padding(14)
+                            .background(.thinMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        }
+
+                        Button("sessions.join") {
+                            Task { await viewModel.joinEntry() }
+                        }
+                        .buttonStyle(.borderedProminent)
                     }
+                    .padding()
                 }
             } else {
                 ContentUnavailableView("sessions.detail.unavailable", systemImage: "exclamationmark.triangle")
@@ -126,5 +115,83 @@ struct SessionDetailView: View {
                 Text(viewModel.errorMessage ?? String(localized: "common.unknown_error"))
             }
         )
+    }
+
+    private func activeParticipants(_ detail: SessionDetail) -> [SessionParticipant] {
+        detail.participants
+            .filter { $0.status == .joined || $0.status == .waitlist }
+            .sorted { $0.queuePosition < $1.queuePosition }
+    }
+
+    private func joinedParticipants(_ detail: SessionDetail) -> [SessionParticipant] {
+        activeParticipants(detail).filter { $0.status == .joined }
+    }
+
+    private func waitlistParticipants(_ detail: SessionDetail) -> [SessionParticipant] {
+        activeParticipants(detail).filter { $0.status == .waitlist }
+    }
+
+    private func withdrawnParticipants(_ detail: SessionDetail) -> [SessionParticipant] {
+        detail.participants
+            .filter { $0.status == .withdrawn || $0.status == .lateWithdraw }
+            .sorted { lhs, rhs in
+                (lhs.withdrewAt ?? lhs.joinedAt) > (rhs.withdrewAt ?? rhs.joinedAt)
+            }
+    }
+
+    private func isAdminEntry(detail: SessionDetail, participant: SessionParticipant) -> Bool {
+        detail.admins.contains(where: { $0.userID == participant.ownerUserID })
+    }
+
+    private func canRemove(_ participant: SessionParticipant) -> Bool {
+        participant.ownerUserID == viewModel.currentUserID
+    }
+}
+
+private struct SessionMetaCard: View {
+    let detail: SessionDetail
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(detail.title)
+                .font(.title3.weight(.semibold))
+            Text("\(detail.startsAt.formatted(date: .abbreviated, time: .shortened)) · \(detail.location)")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+            Text("\(String(localized: "sessions.initiator")): \(detail.initiatorUser.nickname)")
+                .font(.footnote)
+            Text("\(String(localized: "sessions.max")): \(detail.maxParticipants)")
+                .font(.footnote)
+        }
+        .padding(14)
+        .background(.thinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+}
+
+private struct QueueParticipantRow: View {
+    let participant: SessionParticipant
+    let isAdmin: Bool
+    let canRemove: Bool
+    let onRemove: () -> Void
+
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(isAdmin ? "\(participant.displayName) (admin)" : participant.displayName)
+                    .font(.subheadline.weight(.semibold))
+                Text("#\(participant.queuePosition)")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+            if canRemove {
+                Button(action: onRemove) {
+                    Image(systemName: "minus.circle.fill")
+                        .foregroundStyle(.red)
+                }
+                .buttonStyle(.plain)
+            }
+        }
     }
 }

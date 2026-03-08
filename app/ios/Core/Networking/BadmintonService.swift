@@ -6,8 +6,8 @@ protocol BadmintonServiceProtocol {
     func createSession(_ request: CreateSessionRequest) async throws -> Session
     func getSessionDetail(sessionID: String) async throws -> SessionDetail
     func finalizeSession(sessionID: String) async throws -> Session
-    func joinSession(sessionID: String) async throws -> SessionParticipant
-    func withdrawSession(sessionID: String) async throws -> WithdrawResult
+    func joinSession(sessionID: String, entryName: String?) async throws -> SessionParticipant
+    func withdrawParticipant(sessionID: String, participantID: String) async throws -> WithdrawResult
     func listSessionAdmins(sessionID: String) async throws -> [SessionAdmin]
     func addSessionAdmin(sessionID: String, request: AddSessionAdminRequest) async throws -> SessionAdmin
     func updateParticipant(sessionID: String, participantID: String, request: UpdateParticipantRequest) async throws -> SessionParticipant
@@ -47,12 +47,18 @@ final class BadmintonService: BadmintonServiceProtocol {
         try await client.requestWithoutBody(.finalizeSession(sessionID: sessionID), responseType: Session.self)
     }
 
-    func joinSession(sessionID: String) async throws -> SessionParticipant {
-        try await client.requestWithoutBody(.joinSession(sessionID: sessionID), responseType: SessionParticipant.self)
+    func joinSession(sessionID: String, entryName: String?) async throws -> SessionParticipant {
+        // Current backend contract doesn't accept custom entry names yet.
+        // We keep the local API stable and ignore entryName for real backend mode.
+        _ = entryName
+        return try await client.requestWithoutBody(.joinSession(sessionID: sessionID), responseType: SessionParticipant.self)
     }
 
-    func withdrawSession(sessionID: String) async throws -> WithdrawResult {
-        try await client.requestWithoutBody(.withdrawSession(sessionID: sessionID), responseType: WithdrawResult.self)
+    func withdrawParticipant(sessionID: String, participantID: String) async throws -> WithdrawResult {
+        // Current backend contract withdraws the current user entry only.
+        // We keep participantID for mock/local UX flow and ignore it in real backend mode.
+        _ = participantID
+        return try await client.requestWithoutBody(.withdrawSession(sessionID: sessionID), responseType: WithdrawResult.self)
     }
 
     func listSessionAdmins(sessionID: String) async throws -> [SessionAdmin] {

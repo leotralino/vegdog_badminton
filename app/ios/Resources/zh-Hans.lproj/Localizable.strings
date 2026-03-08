@@ -54,9 +54,27 @@
 "sessions.detail.section_actions" = "操作";
 "sessions.detail.section_participants" = "参与者";
 "sessions.detail.no_participants" = "暂无参与者";
+"sessions.detail.waitlist" = "后补";
+"sessions.detail.withdrawn" = "已退出";
+"sessions.detail.withdrawn_normal" = "已退出";
+"sessions.detail.withdrawn_late" = "晚退";
 "sessions.detail.participant_status" = "状态";
 "sessions.detail.stayed_late_yes" = "加时：是";
 "sessions.detail.stayed_late_no" = "加时：否";
+
+"history.title" = "历史";
+"history.loading" = "正在加载历史...";
+"history.participated" = "我参加过的活动";
+"history.past" = "过往活动";
+"history.empty" = "暂无记录";
+
+"settings.title" = "设置";
+"settings.profile" = "个人信息";
+"settings.avatar" = "头像链接";
+"settings.nickname" = "昵称";
+"settings.payment" = "收款信息";
+"settings.payment_info" = "收款方式（Venmo/Zelle/微信）";
+"settings.account" = "账号";
 
 "payments.title" = "收款";
 "payments.section_session" = "活动";

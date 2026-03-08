@@ -152,6 +152,8 @@ struct SessionParticipant: Codable, Identifiable {
     let id: String
     let sessionID: String
     let user: User
+    let entryName: String?
+    let createdByUserID: String?
     let queuePosition: Int
     let status: ParticipantStatus
     let joinedAt: Date
@@ -164,6 +166,8 @@ struct SessionParticipant: Codable, Identifiable {
         case id
         case sessionID = "session_id"
         case user
+        case entryName = "entry_name"
+        case createdByUserID = "created_by_user_id"
         case queuePosition = "queue_position"
         case status
         case joinedAt = "joined_at"
@@ -171,6 +175,14 @@ struct SessionParticipant: Codable, Identifiable {
         case isReplacement = "is_replacement"
         case replacedParticipantID = "replaced_participant_id"
         case stayedLate = "stayed_late"
+    }
+
+    var displayName: String {
+        entryName ?? user.nickname
+    }
+
+    var ownerUserID: String {
+        createdByUserID ?? user.id
     }
 }
 

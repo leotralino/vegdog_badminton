@@ -4,7 +4,6 @@ struct SessionListView: View {
     @ObservedObject var viewModel: SessionsViewModel
     let service: BadmintonServiceProtocol
     let currentUserID: String?
-    let onSignOut: () -> Void
     @State private var isPresentingCreate = false
     @State private var selectedSessionID: String?
 
@@ -21,7 +20,6 @@ struct SessionListView: View {
                             session: session,
                             onOpenDetail: { selectedSessionID = session.id },
                             onJoin: { Task { await viewModel.join(sessionID: session.id) } },
-                            onWithdraw: { Task { await viewModel.withdraw(sessionID: session.id) } },
                             onFinalize: { Task { await viewModel.finalize(sessionID: session.id) } }
                         )
                     }
@@ -30,9 +28,6 @@ struct SessionListView: View {
             }
             .navigationTitle("sessions.title")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("common.sign_out", action: onSignOut)
-                }
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack {
                         LanguageToggleButton()
@@ -99,7 +94,6 @@ private struct SessionRowView: View {
     let session: Session
     let onOpenDetail: () -> Void
     let onJoin: () -> Void
-    let onWithdraw: () -> Void
     let onFinalize: () -> Void
 
     var body: some View {
@@ -127,8 +121,6 @@ private struct SessionRowView: View {
                     .buttonStyle(.bordered)
                 Button("sessions.join", action: onJoin)
                     .buttonStyle(.borderedProminent)
-                Button("sessions.withdraw", action: onWithdraw)
-                    .buttonStyle(.bordered)
                 Button("sessions.finalize", action: onFinalize)
                     .buttonStyle(.bordered)
             }

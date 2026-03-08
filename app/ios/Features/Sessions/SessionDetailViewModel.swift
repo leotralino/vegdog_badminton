@@ -23,6 +23,20 @@ final class SessionDetailViewModel: ObservableObject {
         return detail.admins.contains(where: { $0.userID == currentUserID })
     }
 
+    var currentUserNickname: String {
+        guard let currentUserID, let detail else { return "Me" }
+        if detail.initiatorUser.id == currentUserID {
+            return detail.initiatorUser.nickname
+        }
+        if let participant = detail.participants.first(where: { $0.ownerUserID == currentUserID }) {
+            return participant.user.nickname
+        }
+        if let admin = detail.admins.first(where: { $0.userID == currentUserID }) {
+            return admin.nickname
+        }
+        return "Me"
+    }
+
     func load() async {
         isLoading = true
         errorMessage = nil
@@ -35,18 +49,21 @@ final class SessionDetailViewModel: ObservableObject {
         }
     }
 
-    func join() async {
+    func joinEntry() async {
+        guard let currentUserID else { return }
+        let activeCount = detail?.participants.filter { $0.ownerUserID == currentUserID && ($0.status == .joined || $0.status == .waitlist) }.count ?? 0
+        let defaultName = activeCount == 0 ? currentUserNickname : "\(currentUserNickname) +\(activeCount)"
         do {
-            _ = try await service.joinSession(sessionID: sessionID)
+            _ = try await service.joinSession(sessionID: sessionID, entryName: defaultName)
             await load()
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
-    func withdraw() async {
+    func removeEntry(participantID: String) async {
         do {
-            _ = try await service.withdrawSession(sessionID: sessionID)
+            _ = try await service.withdrawParticipant(sessionID: sessionID, participantID: participantID)
             await load()
         } catch {
             errorMessage = error.localizedDescription
