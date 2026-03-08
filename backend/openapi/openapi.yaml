@@ -1,0 +1,574 @@
+openapi: 3.0.3
+info:
+  title: Badminton Friends API
+  version: 0.1.0
+  description: >
+    API contract for badminton session management, queue (接龙), payment tracking,
+    and phase-2 match management.
+servers:
+  - url: https://api.example.com
+tags:
+  - name: Auth
+  - name: Sessions
+  - name: Payments
+  - name: Matches
+
+paths:
+  /auth/wechat/login:
+    post:
+      tags: [Auth]
+      summary: Exchange WeChat auth code for app token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WeChatLoginRequest"
+      responses:
+        "200":
+          description: Login success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+
+  /sessions:
+    post:
+      tags: [Sessions]
+      summary: Create a badminton session (接龙)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSessionRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+    get:
+      tags: [Sessions]
+      summary: List sessions
+      responses:
+        "200":
+          description: Session list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Session"
+                required: [items]
+
+  /sessions/{sessionId}:
+    get:
+      tags: [Sessions]
+      summary: Get session details
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Session details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionDetail"
+
+  /sessions/{sessionId}/finalize:
+    post:
+      tags: [Sessions]
+      summary: Finalize roster submission to court
+      description: Sets `finalize_at` and freezes replacement logic.
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Finalized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+
+  /sessions/{sessionId}/join:
+    post:
+      tags: [Sessions]
+      summary: Join session queue
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Joined or waitlisted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionParticipant"
+
+  /sessions/{sessionId}/withdraw:
+    post:
+      tags: [Sessions]
+      summary: Withdraw from session queue
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Withdraw result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WithdrawResult"
+
+  /sessions/{sessionId}/participants/{participantId}:
+    patch:
+      tags: [Sessions]
+      summary: Update participant metadata (admin)
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+        - $ref: "#/components/parameters/ParticipantId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateParticipantRequest"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionParticipant"
+
+  /sessions/{sessionId}/payments/methods:
+    post:
+      tags: [Payments]
+      summary: Add payment method for collector
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePaymentMethodRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentMethod"
+    get:
+      tags: [Payments]
+      summary: List payment methods for session
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Methods list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PaymentMethod"
+                required: [items]
+
+  /sessions/{sessionId}/payments/records:
+    post:
+      tags: [Payments]
+      summary: Create or update payment record for participant
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpsertPaymentRecordRequest"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaymentRecord"
+    get:
+      tags: [Payments]
+      summary: List payment records for session
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Records list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/PaymentRecord"
+                required: [items]
+
+  /sessions/{sessionId}/matches:
+    post:
+      tags: [Matches]
+      summary: Create match plan (phase 2)
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "201":
+          description: Created
+    get:
+      tags: [Matches]
+      summary: List matches for session (phase 2)
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Match list
+
+components:
+  parameters:
+    SessionId:
+      in: path
+      name: sessionId
+      required: true
+      schema:
+        type: string
+    ParticipantId:
+      in: path
+      name: participantId
+      required: true
+      schema:
+        type: string
+
+  schemas:
+    WeChatLoginRequest:
+      type: object
+      properties:
+        code:
+          type: string
+      required: [code]
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+      required: [token, user]
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        nickname:
+          type: string
+        avatar_url:
+          type: string
+        wechat_openid:
+          type: string
+        wechat_unionid:
+          type: string
+      required: [id, nickname]
+
+    CreateSessionRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        starts_at:
+          type: string
+          format: date-time
+        ends_at:
+          type: string
+          format: date-time
+        location:
+          type: string
+        court_count:
+          type: integer
+          minimum: 1
+        max_participants:
+          type: integer
+          minimum: 1
+        withdraw_deadline:
+          type: string
+          format: date-time
+        fee_rule:
+          $ref: "#/components/schemas/FeeRule"
+      required:
+        [
+          title,
+          starts_at,
+          location,
+          court_count,
+          max_participants,
+          withdraw_deadline,
+          fee_rule
+        ]
+
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        starts_at:
+          type: string
+          format: date-time
+        ends_at:
+          type: string
+          format: date-time
+        location:
+          type: string
+        court_count:
+          type: integer
+        max_participants:
+          type: integer
+        withdraw_deadline:
+          type: string
+          format: date-time
+        finalize_at:
+          type: string
+          format: date-time
+          nullable: true
+        status:
+          $ref: "#/components/schemas/SessionStatus"
+        fee_rule:
+          $ref: "#/components/schemas/FeeRule"
+      required:
+        [
+          id,
+          title,
+          starts_at,
+          location,
+          court_count,
+          max_participants,
+          withdraw_deadline,
+          status,
+          fee_rule
+        ]
+
+    SessionDetail:
+      allOf:
+        - $ref: "#/components/schemas/Session"
+        - type: object
+          properties:
+            participants:
+              type: array
+              items:
+                $ref: "#/components/schemas/SessionParticipant"
+          required: [participants]
+
+    SessionParticipant:
+      type: object
+      properties:
+        id:
+          type: string
+        session_id:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+        queue_position:
+          type: integer
+          minimum: 1
+        status:
+          $ref: "#/components/schemas/ParticipantStatus"
+        joined_at:
+          type: string
+          format: date-time
+        withdrew_at:
+          type: string
+          format: date-time
+          nullable: true
+        is_replacement:
+          type: boolean
+          description: True if this participant filled a late-withdraw slot.
+        replaced_participant_id:
+          type: string
+          nullable: true
+        stayed_late:
+          type: boolean
+          description: Admin-set flag indicating extra court usage.
+      required:
+        [id, session_id, user, queue_position, status, joined_at, is_replacement, stayed_late]
+
+    WithdrawResult:
+      type: object
+      properties:
+        participant_id:
+          type: string
+        status:
+          $ref: "#/components/schemas/ParticipantStatus"
+        liable_for_base_fee:
+          type: boolean
+          description: True when participant must still pay base court fee.
+        reason:
+          type: string
+          enum:
+            - before_deadline
+            - late_no_replacement
+            - late_replaced_before_finalize
+      required: [participant_id, status, liable_for_base_fee, reason]
+
+    UpdateParticipantRequest:
+      type: object
+      properties:
+        stayed_late:
+          type: boolean
+        admin_note:
+          type: string
+      additionalProperties: false
+
+    CreatePaymentMethodRequest:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/PaymentMethodType"
+        label:
+          type: string
+        account_ref:
+          type: string
+        deep_link:
+          type: string
+          description: App URL scheme link when supported (for example venmo://...).
+      required: [type, label, account_ref]
+
+    PaymentMethod:
+      type: object
+      properties:
+        id:
+          type: string
+        session_id:
+          type: string
+        owner_user_id:
+          type: string
+        type:
+          $ref: "#/components/schemas/PaymentMethodType"
+        label:
+          type: string
+        account_ref:
+          type: string
+        deep_link:
+          type: string
+          nullable: true
+      required: [id, session_id, owner_user_id, type, label, account_ref]
+
+    UpsertPaymentRecordRequest:
+      type: object
+      properties:
+        participant_id:
+          type: string
+        base_fee_amount:
+          type: number
+          format: float
+        late_usage_fee_amount:
+          type: number
+          format: float
+          default: 0
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        note:
+          type: string
+      required: [participant_id, base_fee_amount, status]
+
+    PaymentRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        session_id:
+          type: string
+        participant_id:
+          type: string
+        base_fee_amount:
+          type: number
+          format: float
+        late_usage_fee_amount:
+          type: number
+          format: float
+        total_amount:
+          type: number
+          format: float
+        status:
+          $ref: "#/components/schemas/PaymentStatus"
+        updated_at:
+          type: string
+          format: date-time
+      required:
+        [
+          id,
+          session_id,
+          participant_id,
+          base_fee_amount,
+          late_usage_fee_amount,
+          total_amount,
+          status,
+          updated_at
+        ]
+
+    SessionStatus:
+      type: string
+      enum:
+        - draft
+        - open
+        - locked
+        - completed
+        - canceled
+
+    ParticipantStatus:
+      type: string
+      enum:
+        - joined
+        - waitlist
+        - withdrawn
+        - late_withdraw
+
+    PaymentStatus:
+      type: string
+      enum:
+        - unpaid
+        - paid
+        - waived
+
+    PaymentMethodType:
+      type: string
+      enum:
+        - venmo
+        - zelle
+        - other
+
+    FeeRule:
+      type: object
+      properties:
+        mode:
+          type: string
+          enum:
+            - fixed_per_person
+            - split_by_attendance
+        amount:
+          type: number
+          format: float
+          description: Required if mode = fixed_per_person.
+        late_withdraw_ratio:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          default: 1
+          description: 1 means full fee liability for late withdraw when applicable.
+      required: [mode]
