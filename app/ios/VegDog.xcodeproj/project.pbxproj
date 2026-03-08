@@ -32,6 +32,7 @@
 		C9E10861818F55A5A8DDF814 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F6C182A284CB388B36346 /* SessionsViewModel.swift */; };
 		CF41B562C55F1EE4622F9452 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9181A2393133D2725214AD /* APIModels.swift */; };
 		D7400BE9A6435279DBE11E0E /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E350339846047FB2BE64A15C /* APIEndpoint.swift */; };
+		D89F32949B86B0DD506DBCD9 /* CuteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD6F9C2FC3B47EA394D8A35 /* CuteTheme.swift */; };
 		DD52054B70DD6189BB7E0897 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E23D12550623941D68F1D79 /* AuthViewModel.swift */; };
 		E77B5DAD69DF1F294944F662 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF1FF7F5EAD43A3E49E839 /* HistoryView.swift */; };
 		E95F3D576826E620884167A2 /* VegDogLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF33C3D2626B932FC11F8E57 /* VegDogLogoView.swift */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		0409A88361A0633633209153 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		08A672091898F4DBADE33974 /* BadmintonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadmintonService.swift; sourceTree = "<group>"; };
+		0CD6F9C2FC3B47EA394D8A35 /* CuteTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuteTheme.swift; sourceTree = "<group>"; };
 		0CFD72301744446A6C95D8CD /* LanguageToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageToggleButton.swift; sourceTree = "<group>"; };
 		0D8F2A0E14BE42845CEB1963 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		0E23D12550623941D68F1D79 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			children = (
 				3A833EE9822BCC1EE8947ED9 /* .gitkeep */,
 				9661392505507D4C2279C536 /* AppEnvironment.swift */,
+				0CD6F9C2FC3B47EA394D8A35 /* CuteTheme.swift */,
 				B2A176853B661294601D1F37 /* LanguageSettings.swift */,
 				0CFD72301744446A6C95D8CD /* LanguageToggleButton.swift */,
 			);
@@ -342,6 +345,7 @@
 				DD52054B70DD6189BB7E0897 /* AuthViewModel.swift in Sources */,
 				9633E70141028E2C57BBBF63 /* AvatarView.swift in Sources */,
 				1F9629DAAFB20B8F5C007BE4 /* BadmintonService.swift in Sources */,
+				D89F32949B86B0DD506DBCD9 /* CuteTheme.swift in Sources */,
 				E77B5DAD69DF1F294944F662 /* HistoryView.swift in Sources */,
 				F669AFA4E53FCB6860CFE963 /* HistoryViewModel.swift in Sources */,
 				37995E3868C24A1777672019 /* LanguageSettings.swift in Sources */,

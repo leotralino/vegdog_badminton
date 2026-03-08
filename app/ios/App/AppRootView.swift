@@ -45,6 +45,8 @@ struct AppRootView: View {
                 )
             }
         }
+        .tint(CuteTheme.leaf)
+        .background(CuteTheme.mint.opacity(0.12))
         .task(id: appState.currentUser?.id) {
             historyViewModel.setCurrentUserID(appState.currentUser?.id)
         }

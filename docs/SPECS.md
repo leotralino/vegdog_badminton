@@ -64,6 +64,10 @@ Build an iOS app for badminton friends to organize sessions with queue sign-up (
   - Entry removal is per-entry via `-` action on entries created by the current user
   - Withdrawn entries appear in a bottom withdrawn panel
   - Rejoin with same entry name removes it from withdrawn panel
+  - Queue lock behavior:
+    - when locked, no new join and no withdrawal
+    - admin can mark `stayed_late` using checkbox-style control
+    - late-play marking appears once queue is locked (enabled after start time)
 
 
 ### 3.3 Payment
@@ -78,6 +82,16 @@ Build an iOS app for badminton friends to organize sessions with queue sign-up (
   - `waived`
 - MVP information architecture note:
   - Payment configuration lives under `Settings` tab instead of a standalone `Payments` tab.
+
+### 3.4 User Profile Metadata (MVP Optional)
+- Fields in settings:
+  - avatar URL
+  - nickname
+  - gender (optional)
+  - level (optional)
+- Queue display:
+  - avatar shown left of participant name
+  - gender/level metadata shown when available
 
 ## 4. Add-on Features (Phase 2)
 

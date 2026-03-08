@@ -3,6 +3,8 @@ import SwiftUI
 struct SessionDetailView: View {
     @ObservedObject var viewModel: SessionDetailViewModel
     @AppStorage("profile.avatar_url") private var currentUserAvatarURL: String = ""
+    @AppStorage("profile.gender") private var currentUserGender: String = ""
+    @AppStorage("profile.level") private var currentUserLevel: String = ""
 
     var body: some View {
         Group {
@@ -34,7 +36,9 @@ struct SessionDetailView: View {
                                         isAdmin: isAdminEntry(detail: detail, participant: participant),
                                         canRemove: canRemove(participant),
                                         avatarURL: avatarURL(for: participant),
-                                        canRecordLate: canRecordLate(detail: detail),
+                                        showLateControl: showLateControl(detail: detail),
+                                        canRecordLate: canToggleLate(detail: detail),
+                                        metadataText: metadataText(for: participant),
                                         onToggleLate: {
                                             Task {
                                                 await viewModel.updateStayedLate(
@@ -60,7 +64,9 @@ struct SessionDetailView: View {
                                             isAdmin: isAdminEntry(detail: detail, participant: participant),
                                             canRemove: canRemove(participant),
                                             avatarURL: avatarURL(for: participant),
-                                            canRecordLate: canRecordLate(detail: detail),
+                                            showLateControl: showLateControl(detail: detail),
+                                            canRecordLate: canToggleLate(detail: detail),
+                                            metadataText: metadataText(for: participant),
                                             onToggleLate: {
                                                 Task {
                                                     await viewModel.updateStayedLate(
@@ -77,9 +83,7 @@ struct SessionDetailView: View {
                                 }
                             }
                         }
-                        .padding(14)
-                        .background(.thinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        .doodleCard()
 
                         if !withdrawnParticipants(detail).isEmpty {
                             VStack(alignment: .leading, spacing: 8) {
@@ -99,9 +103,7 @@ struct SessionDetailView: View {
                                     }
                                 }
                             }
-                            .padding(14)
-                            .background(.thinMaterial)
-                            .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                            .doodleCard()
                         }
 
                         if detail.status != .locked {
@@ -174,8 +176,12 @@ struct SessionDetailView: View {
         return participant.ownerUserID == viewModel.currentUserID
     }
 
-    private func canRecordLate(detail: SessionDetail) -> Bool {
-        viewModel.isCurrentUserAdmin && detail.status == .locked && Date() >= detail.startsAt
+    private func showLateControl(detail: SessionDetail) -> Bool {
+        viewModel.isCurrentUserAdmin && detail.status == .locked
+    }
+
+    private func canToggleLate(detail: SessionDetail) -> Bool {
+        showLateControl(detail: detail) && Date() >= detail.startsAt
     }
 
     private func avatarURL(for participant: SessionParticipant) -> String? {
@@ -183,6 +189,28 @@ struct SessionDetailView: View {
             return currentUserAvatarURL
         }
         return participant.user.avatarURL
+    }
+
+    private func metadataText(for participant: SessionParticipant) -> String? {
+        if participant.ownerUserID == viewModel.currentUserID {
+            let items = [localizedGender(currentUserGender), currentUserLevel.trimmingCharacters(in: .whitespacesAndNewlines)]
+                .filter { !$0.isEmpty }
+            return items.isEmpty ? nil : items.joined(separator: " · ")
+        }
+        return nil
+    }
+
+    private func localizedGender(_ raw: String) -> String {
+        switch raw {
+        case "male":
+            return String(localized: "settings.gender_male")
+        case "female":
+            return String(localized: "settings.gender_female")
+        case "other":
+            return String(localized: "settings.gender_other")
+        default:
+            return ""
+        }
     }
 }
 
@@ -208,8 +236,7 @@ private struct SessionMetaCard: View {
             }
         }
         .padding(14)
-        .background(.thinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .doodleCard()
     }
 }
 
@@ -218,7 +245,9 @@ private struct QueueParticipantRow: View {
     let isAdmin: Bool
     let canRemove: Bool
     let avatarURL: String?
+    let showLateControl: Bool
     let canRecordLate: Bool
+    let metadataText: String?
     let onToggleLate: () -> Void
     let onRemove: () -> Void
 
@@ -228,17 +257,25 @@ private struct QueueParticipantRow: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(isAdmin ? "\(participant.displayName) (admin)" : participant.displayName)
                     .font(.subheadline.weight(.semibold))
+                if let metadataText, !metadataText.isEmpty {
+                    Text(metadataText)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
                 Text("#\(participant.queuePosition)")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            if canRecordLate {
-                Button(participant.stayedLate ? "sessions.detail.late_played" : "sessions.detail.late_play") {
+            if showLateControl {
+                Button {
                     onToggleLate()
+                } label: {
+                    Image(systemName: participant.stayedLate ? "checkmark.square.fill" : "square")
+                        .foregroundStyle(canRecordLate ? .green : .gray)
                 }
                 .buttonStyle(.bordered)
-                .font(.footnote)
+                .disabled(!canRecordLate)
             }
             if canRemove {
                 Button(action: onRemove) {

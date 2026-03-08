@@ -75,6 +75,12 @@
 "settings.profile" = "个人信息";
 "settings.avatar" = "头像链接";
 "settings.nickname" = "昵称";
+"settings.gender" = "性别";
+"settings.gender_unspecified" = "不透露";
+"settings.gender_male" = "男";
+"settings.gender_female" = "女";
+"settings.gender_other" = "其他";
+"settings.level" = "水平";
 "settings.payment" = "收款信息";
 "settings.payment_info" = "收款方式（Venmo/Zelle/微信）";
 "settings.account" = "账号";

@@ -75,6 +75,12 @@
 "settings.profile" = "Profile";
 "settings.avatar" = "Avatar URL";
 "settings.nickname" = "Nickname";
+"settings.gender" = "Gender";
+"settings.gender_unspecified" = "Prefer not to say";
+"settings.gender_male" = "Male";
+"settings.gender_female" = "Female";
+"settings.gender_other" = "Other";
+"settings.level" = "Level";
 "settings.payment" = "Payment";
 "settings.payment_info" = "Payment Info (Venmo/Zelle/WeChat)";
 "settings.account" = "Account";

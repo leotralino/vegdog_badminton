@@ -6,6 +6,8 @@ struct SettingsView: View {
     @AppStorage("profile.nickname") private var nickname: String = ""
     @AppStorage("profile.avatar_url") private var avatarURL: String = ""
     @AppStorage("profile.payment") private var paymentInfo: String = ""
+    @AppStorage("profile.gender") private var gender: String = ""
+    @AppStorage("profile.level") private var level: String = ""
 
     var body: some View {
         NavigationStack {
@@ -20,6 +22,13 @@ struct SettingsView: View {
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
                     TextField("settings.nickname", text: $nickname)
+                    Picker("settings.gender", selection: $gender) {
+                        Text("settings.gender_unspecified").tag("")
+                        Text("settings.gender_male").tag("male")
+                        Text("settings.gender_female").tag("female")
+                        Text("settings.gender_other").tag("other")
+                    }
+                    TextField("settings.level", text: $level)
                 }
 
                 Section("settings.payment") {
@@ -34,6 +43,14 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("settings.title")
+            .scrollContentBackground(.hidden)
+            .background(
+                LinearGradient(
+                    colors: [CuteTheme.mint.opacity(0.35), CuteTheme.cream],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     LanguageToggleButton()
