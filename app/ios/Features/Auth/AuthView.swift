@@ -44,11 +44,6 @@ struct AuthView: View {
                 Spacer()
             }
             .padding()
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    LanguageToggleButton()
-                }
-            }
         }
     }
 }

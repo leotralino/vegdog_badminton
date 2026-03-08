@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SessionDetailView: View {
     @ObservedObject var viewModel: SessionDetailViewModel
+    @AppStorage("profile.avatar_url") private var currentUserAvatarURL: String = ""
 
     var body: some View {
         Group {
@@ -10,7 +11,11 @@ struct SessionDetailView: View {
             } else if let detail = viewModel.detail {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        SessionMetaCard(detail: detail)
+                        SessionMetaCard(
+                            detail: detail,
+                            canLock: viewModel.isCurrentUserAdmin && detail.status != .locked,
+                            onLock: { Task { await viewModel.finalize() } }
+                        )
 
                         VStack(alignment: .leading, spacing: 10) {
                             Text("sessions.detail.section_participants")
@@ -28,6 +33,16 @@ struct SessionDetailView: View {
                                         participant: participant,
                                         isAdmin: isAdminEntry(detail: detail, participant: participant),
                                         canRemove: canRemove(participant),
+                                        avatarURL: avatarURL(for: participant),
+                                        canRecordLate: canRecordLate(detail: detail),
+                                        onToggleLate: {
+                                            Task {
+                                                await viewModel.updateStayedLate(
+                                                    participantID: participant.id,
+                                                    stayedLate: !participant.stayedLate
+                                                )
+                                            }
+                                        },
                                         onRemove: {
                                             Task { await viewModel.removeEntry(participantID: participant.id) }
                                         }
@@ -44,6 +59,16 @@ struct SessionDetailView: View {
                                             participant: participant,
                                             isAdmin: isAdminEntry(detail: detail, participant: participant),
                                             canRemove: canRemove(participant),
+                                            avatarURL: avatarURL(for: participant),
+                                            canRecordLate: canRecordLate(detail: detail),
+                                            onToggleLate: {
+                                                Task {
+                                                    await viewModel.updateStayedLate(
+                                                        participantID: participant.id,
+                                                        stayedLate: !participant.stayedLate
+                                                    )
+                                                }
+                                            },
                                             onRemove: {
                                                 Task { await viewModel.removeEntry(participantID: participant.id) }
                                             }
@@ -79,10 +104,16 @@ struct SessionDetailView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
                         }
 
-                        Button("sessions.join") {
-                            Task { await viewModel.joinEntry() }
+                        if detail.status != .locked {
+                            Button("sessions.join") {
+                                Task { await viewModel.joinEntry() }
+                            }
+                            .buttonStyle(.borderedProminent)
+                        } else {
+                            Text("sessions.detail.locked_notice")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
                         }
-                        .buttonStyle(.borderedProminent)
                     }
                     .padding()
                 }
@@ -92,11 +123,6 @@ struct SessionDetailView: View {
         }
         .navigationTitle("sessions.detail.title")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                LanguageToggleButton()
-            }
-        }
         .task {
             if viewModel.detail == nil {
                 await viewModel.load()
@@ -144,12 +170,26 @@ struct SessionDetailView: View {
     }
 
     private func canRemove(_ participant: SessionParticipant) -> Bool {
-        participant.ownerUserID == viewModel.currentUserID
+        guard let detail = viewModel.detail, detail.status != .locked else { return false }
+        return participant.ownerUserID == viewModel.currentUserID
+    }
+
+    private func canRecordLate(detail: SessionDetail) -> Bool {
+        viewModel.isCurrentUserAdmin && detail.status == .locked && Date() >= detail.startsAt
+    }
+
+    private func avatarURL(for participant: SessionParticipant) -> String? {
+        if participant.ownerUserID == viewModel.currentUserID, !currentUserAvatarURL.isEmpty {
+            return currentUserAvatarURL
+        }
+        return participant.user.avatarURL
     }
 }
 
 private struct SessionMetaCard: View {
     let detail: SessionDetail
+    let canLock: Bool
+    let onLock: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -162,6 +202,10 @@ private struct SessionMetaCard: View {
                 .font(.footnote)
             Text("\(String(localized: "sessions.max")): \(detail.maxParticipants)")
                 .font(.footnote)
+            if canLock {
+                Button("sessions.finalize", action: onLock)
+                    .buttonStyle(.borderedProminent)
+            }
         }
         .padding(14)
         .background(.thinMaterial)
@@ -173,10 +217,14 @@ private struct QueueParticipantRow: View {
     let participant: SessionParticipant
     let isAdmin: Bool
     let canRemove: Bool
+    let avatarURL: String?
+    let canRecordLate: Bool
+    let onToggleLate: () -> Void
     let onRemove: () -> Void
 
     var body: some View {
         HStack {
+            AvatarView(avatarURL: avatarURL, size: 30)
             VStack(alignment: .leading, spacing: 4) {
                 Text(isAdmin ? "\(participant.displayName) (admin)" : participant.displayName)
                     .font(.subheadline.weight(.semibold))
@@ -185,6 +233,13 @@ private struct QueueParticipantRow: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
+            if canRecordLate {
+                Button(participant.stayedLate ? "sessions.detail.late_played" : "sessions.detail.late_play") {
+                    onToggleLate()
+                }
+                .buttonStyle(.bordered)
+                .font(.footnote)
+            }
             if canRemove {
                 Button(action: onRemove) {
                     Image(systemName: "minus.circle.fill")

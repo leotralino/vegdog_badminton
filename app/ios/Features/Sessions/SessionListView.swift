@@ -16,12 +16,11 @@ struct SessionListView: View {
                     ContentUnavailableView("sessions.empty_title", systemImage: "calendar")
                 } else {
                     List(viewModel.sessions) { session in
-                        SessionRowView(
-                            session: session,
-                            onOpenDetail: { selectedSessionID = session.id },
-                            onJoin: { Task { await viewModel.join(sessionID: session.id) } },
-                            onFinalize: { Task { await viewModel.finalize(sessionID: session.id) } }
-                        )
+                        SessionRowView(session: session)
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedSessionID = session.id
+                            }
                     }
                     .listStyle(.plain)
                 }
@@ -30,7 +29,6 @@ struct SessionListView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack {
-                        LanguageToggleButton()
                         Button {
                             isPresentingCreate = true
                         } label: {
@@ -92,9 +90,6 @@ struct SessionListView: View {
 
 private struct SessionRowView: View {
     let session: Session
-    let onOpenDetail: () -> Void
-    let onJoin: () -> Void
-    let onFinalize: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -115,16 +110,6 @@ private struct SessionRowView: View {
             Text("\(String(localized: "sessions.withdraw_by")): \(session.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-
-            HStack {
-                Button("sessions.details", action: onOpenDetail)
-                    .buttonStyle(.bordered)
-                Button("sessions.join", action: onJoin)
-                    .buttonStyle(.borderedProminent)
-                Button("sessions.finalize", action: onFinalize)
-                    .buttonStyle(.bordered)
-            }
-            .font(.footnote)
         }
         .padding(.vertical, 4)
     }

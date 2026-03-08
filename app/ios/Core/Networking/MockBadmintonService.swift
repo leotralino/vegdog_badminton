@@ -122,6 +122,9 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         guard let session = sessions.first(where: { $0.id == sessionID }) else {
             throw APIError.httpError(statusCode: 404, message: "Session not found")
         }
+        guard session.status != .locked else {
+            throw APIError.httpError(statusCode: 403, message: "Queue is locked.")
+        }
         let user = ensureCurrentUser()
         var participants = participantsBySessionID[sessionID] ?? []
         let resolvedName = normalizedEntryName(entryName, fallback: user.nickname)
@@ -159,6 +162,9 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         let user = ensureCurrentUser()
         guard let session = sessions.first(where: { $0.id == sessionID }) else {
             throw APIError.httpError(statusCode: 404, message: "Session not found")
+        }
+        guard session.status != .locked else {
+            throw APIError.httpError(statusCode: 403, message: "Queue is locked.")
         }
         guard var participants = participantsBySessionID[sessionID] else {
             throw APIError.httpError(statusCode: 404, message: "No participants")

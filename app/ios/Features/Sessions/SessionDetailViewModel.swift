@@ -24,6 +24,10 @@ final class SessionDetailViewModel: ObservableObject {
     }
 
     var currentUserNickname: String {
+        let profileNickname = UserDefaults.standard.string(forKey: "profile.nickname")?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !profileNickname.isEmpty {
+            return profileNickname
+        }
         guard let currentUserID, let detail else { return "Me" }
         if detail.initiatorUser.id == currentUserID {
             return detail.initiatorUser.nickname

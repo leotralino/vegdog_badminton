@@ -11,6 +11,11 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section("settings.profile") {
+                    HStack {
+                        Spacer()
+                        AvatarView(avatarURL: avatarURL, size: 72)
+                        Spacer()
+                    }
                     TextField("settings.avatar", text: $avatarURL)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)

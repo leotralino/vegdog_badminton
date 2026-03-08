@@ -58,6 +58,9 @@
 "sessions.detail.withdrawn" = "已退出";
 "sessions.detail.withdrawn_normal" = "已退出";
 "sessions.detail.withdrawn_late" = "晚退";
+"sessions.detail.locked_notice" = "队列已锁定，无法再加入或退出。";
+"sessions.detail.late_play" = "加时到场";
+"sessions.detail.late_played" = "已标记加时";
 "sessions.detail.participant_status" = "状态";
 "sessions.detail.stayed_late_yes" = "加时：是";
 "sessions.detail.stayed_late_no" = "加时：否";

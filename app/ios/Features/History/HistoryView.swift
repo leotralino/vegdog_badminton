@@ -37,9 +37,6 @@ struct HistoryView: View {
             .navigationTitle("history.title")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    LanguageToggleButton()
-                }
-                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task { await viewModel.load() }
                     } label: {

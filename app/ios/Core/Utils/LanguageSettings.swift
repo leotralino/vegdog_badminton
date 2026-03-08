@@ -44,9 +44,7 @@ final class LanguageSettings: ObservableObject {
             currentLanguage = language
             return
         }
-
-        let preferred = Locale.preferredLanguages.first ?? AppLanguage.english.rawValue
-        currentLanguage = preferred.hasPrefix("zh") ? .mandarin : .english
+        currentLanguage = .mandarin
     }
 
     var locale: Locale {

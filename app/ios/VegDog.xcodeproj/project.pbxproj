@@ -25,6 +25,7 @@
 		6D950F79F603B4CB644D7A1C /* MockBadmintonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E53A55225D4361903ECC21 /* MockBadmintonService.swift */; };
 		7B01EDADA86F64436DBE54BA /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661392505507D4C2279C536 /* AppEnvironment.swift */; };
 		94BE48B744B917CE83199D43 /* SessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB37DB6CE94DC3D72C8765 /* SessionListView.swift */; };
+		9633E70141028E2C57BBBF63 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FFCA4275C50BF4B7DA5651 /* AvatarView.swift */; };
 		9A521D641716C9313FB603F0 /* SessionCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EE67440A840B5C3479C159 /* SessionCreateView.swift */; };
 		A909BDE4DF1CDC837021EBFD /* PaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E92A1B500448F562F0CCD5 /* PaymentsView.swift */; };
 		B7B15255B7FBA20EA28E37DD /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F559D4E79765F8486F7BE /* AppContainer.swift */; };
@@ -56,6 +57,7 @@
 		246A5EC8B3E220CEADB05A3F /* SessionCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCreateViewModel.swift; sourceTree = "<group>"; };
 		25CA872A2D70EDCBBC518DC1 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
 		2757F02199161A90E41EEB9D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		34FFCA4275C50BF4B7DA5651 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 		3A833EE9822BCC1EE8947ED9 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		46FF1FF7F5EAD43A3E49E839 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		524825DC9D62B0EC6F84FCB6 /* VegDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegDogApp.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				827F559D4E79765F8486F7BE /* AppContainer.swift */,
 				9C9845DEFF29ACB27D4F4580 /* AppRootView.swift */,
 				C513ED3682112011E133AF7E /* AppState.swift */,
+				34FFCA4275C50BF4B7DA5651 /* AvatarView.swift */,
 				524825DC9D62B0EC6F84FCB6 /* VegDogApp.swift */,
 				CF33C3D2626B932FC11F8E57 /* VegDogLogoView.swift */,
 			);
@@ -337,6 +340,7 @@
 				5C2EB9E13E6FE76E94BBC789 /* AppState.swift in Sources */,
 				37440777C72A501405890A8A /* AuthView.swift in Sources */,
 				DD52054B70DD6189BB7E0897 /* AuthViewModel.swift in Sources */,
+				9633E70141028E2C57BBBF63 /* AvatarView.swift in Sources */,
 				1F9629DAAFB20B8F5C007BE4 /* BadmintonService.swift in Sources */,
 				E77B5DAD69DF1F294944F662 /* HistoryView.swift in Sources */,
 				F669AFA4E53FCB6860CFE963 /* HistoryViewModel.swift in Sources */,

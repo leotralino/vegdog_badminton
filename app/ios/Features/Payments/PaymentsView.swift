@@ -110,11 +110,6 @@ struct PaymentsView: View {
                 }
             }
             .navigationTitle("payments.title")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    LanguageToggleButton()
-                }
-            }
             .alert(
                 String(localized: "common.error_title"),
                 isPresented: Binding(

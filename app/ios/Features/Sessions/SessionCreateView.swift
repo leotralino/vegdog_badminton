@@ -51,9 +51,6 @@ struct SessionCreateView: View {
                     Button("common.cancel", action: onCancel)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    LanguageToggleButton()
-                }
-                ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         Task {
                             let success = await viewModel.submit()
