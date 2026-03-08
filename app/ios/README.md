@@ -24,3 +24,10 @@ Create Xcode project named `BadmintonFriends` and map source groups to this fold
 - `Core/Networking/APIClient.swift`: async request layer with auth token support
 - `Core/Networking/BadmintonService.swift`: typed service methods for feature modules
 - `Core/Utils/AppEnvironment.swift`: API base URL config (`API_BASE_URL` override)
+
+## Implemented Feature Scaffold
+- `App/BadmintonFriendsApp.swift`: SwiftUI app entry
+- `App/AppRootView.swift`: auth-gated root routing
+- `App/AppState.swift`: in-memory auth/session state
+- `Features/Auth/AuthViewModel.swift` + `Features/Auth/AuthView.swift`: login UI with WeChat code input
+- `Features/Sessions/SessionsViewModel.swift` + `Features/Sessions/SessionListView.swift`: session list + join/withdraw/finalize actions
