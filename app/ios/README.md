@@ -44,7 +44,9 @@ Create Xcode project named `VegDog` and map source groups to this folder layout.
   - `Resources/zh-Hans.lproj/Localizable.strings`
   - `Resources/en.lproj/InfoPlist.strings`
   - `Resources/zh-Hans.lproj/InfoPlist.strings`
-- Logo asset (vector): `Resources/Brand/vegdog_logo.svg`
+- Logo assets:
+  - `Resources/Brand/vegdog_logo.png` (primary)
+  - `Resources/Brand/vegdog_logo.svg` (generated from PNG)
 
 ## Xcode Project Generation
 This repo uses XcodeGen so project files stay reproducible.
