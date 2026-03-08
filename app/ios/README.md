@@ -31,3 +31,35 @@ Create Xcode project named `BadmintonFriends` and map source groups to this fold
 - `App/AppState.swift`: in-memory auth/session state
 - `Features/Auth/AuthViewModel.swift` + `Features/Auth/AuthView.swift`: login UI with WeChat code input
 - `Features/Sessions/SessionsViewModel.swift` + `Features/Sessions/SessionListView.swift`: session list + join/withdraw/finalize actions
+
+## Xcode Project Generation
+This repo uses XcodeGen so project files stay reproducible.
+
+### Prerequisites
+- Full Xcode installed (not only Command Line Tools)
+- `xcodegen` installed
+
+```bash
+brew install xcodegen
+```
+
+### Generate Project
+Run from repo root:
+
+```bash
+./app/ios/scripts/generate_xcodeproj.sh
+```
+
+This creates:
+- `app/ios/BadmintonFriends.xcodeproj`
+
+### Open in Xcode
+
+```bash
+./app/ios/scripts/open_in_xcode.sh
+```
+
+### Notes
+- If code signing fails, set your team in Xcode target settings.
+- API base URL defaults to `https://api.example.com`.
+- Override API base URL at runtime with env var: `API_BASE_URL`.
