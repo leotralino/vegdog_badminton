@@ -35,10 +35,10 @@ struct SessionDetailView: View {
                         }
 
                         if viewModel.isCurrentUserAdmin {
-                            TextField(String(localized: "sessions.detail.new_admin_user_id"), text: $viewModel.newAdminUserID)
+                            TextField("sessions.detail.new_admin_user_id", text: $viewModel.newAdminUserID)
                                 .textInputAutocapitalization(.never)
                                 .autocorrectionDisabled(true)
-                            TextField(String(localized: "sessions.detail.new_admin_nickname"), text: $viewModel.newAdminNickname)
+                            TextField("sessions.detail.new_admin_nickname", text: $viewModel.newAdminNickname)
                             Button("sessions.detail.add_admin") {
                                 Task { await viewModel.addAdmin() }
                             }

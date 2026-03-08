@@ -9,8 +9,8 @@ struct SessionCreateView: View {
         NavigationStack {
             Form {
                 Section("sessions.create.basic") {
-                    TextField(String(localized: "sessions.create.title_placeholder"), text: $viewModel.title)
-                    TextField(String(localized: "sessions.create.location_placeholder"), text: $viewModel.location)
+                    TextField("sessions.create.title_placeholder", text: $viewModel.title)
+                    TextField("sessions.create.location_placeholder", text: $viewModel.location)
                 }
 
                 Section("sessions.create.schedule") {
@@ -19,9 +19,9 @@ struct SessionCreateView: View {
                 }
 
                 Section("sessions.create.capacity") {
-                    TextField(String(localized: "sessions.create.court_count"), text: $viewModel.courtCount)
+                    TextField("sessions.create.court_count", text: $viewModel.courtCount)
                         .keyboardType(.numberPad)
-                    TextField(String(localized: "sessions.create.max_participants"), text: $viewModel.maxParticipants)
+                    TextField("sessions.create.max_participants", text: $viewModel.maxParticipants)
                         .keyboardType(.numberPad)
                 }
 
@@ -31,10 +31,10 @@ struct SessionCreateView: View {
                         Text("sessions.create.split_by_attendance").tag(FeeMode.splitByAttendance)
                     }
                     if viewModel.feeMode == .fixedPerPerson {
-                        TextField(String(localized: "sessions.create.amount_usd"), text: $viewModel.fixedAmount)
+                        TextField("sessions.create.amount_usd", text: $viewModel.fixedAmount)
                             .keyboardType(.decimalPad)
                     }
-                    TextField(String(localized: "sessions.create.late_ratio"), text: $viewModel.lateWithdrawRatio)
+                    TextField("sessions.create.late_ratio", text: $viewModel.lateWithdrawRatio)
                         .keyboardType(.decimalPad)
                 }
 

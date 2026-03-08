@@ -29,7 +29,25 @@ enum AppLanguage: String, CaseIterable {
 
 @MainActor
 final class LanguageSettings: ObservableObject {
-    @Published var currentLanguage: AppLanguage = .english
+    private static let storageKey = "app.language"
+    @Published var currentLanguage: AppLanguage {
+        didSet {
+            UserDefaults.standard.set(currentLanguage.rawValue, forKey: Self.storageKey)
+        }
+    }
+
+    init() {
+        if
+            let saved = UserDefaults.standard.string(forKey: Self.storageKey),
+            let language = AppLanguage(rawValue: saved)
+        {
+            currentLanguage = language
+            return
+        }
+
+        let preferred = Locale.preferredLanguages.first ?? AppLanguage.english.rawValue
+        currentLanguage = preferred.hasPrefix("zh") ? .mandarin : .english
+    }
 
     var locale: Locale {
         currentLanguage.locale

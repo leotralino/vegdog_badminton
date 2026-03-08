@@ -16,7 +16,7 @@ struct AuthView: View {
                 Text("auth.login_with_wechat")
                     .font(.headline)
 
-                TextField(String(localized: "auth.wechat_code_placeholder"), text: $viewModel.wechatCode)
+                TextField("auth.wechat_code_placeholder", text: $viewModel.wechatCode)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled(true)
                     .textFieldStyle(.roundedBorder)

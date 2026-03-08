@@ -7,7 +7,7 @@ struct PaymentsView: View {
         NavigationStack {
             Form {
                 Section("payments.section_session") {
-                    TextField(String(localized: "payments.session_id"), text: $viewModel.sessionID)
+                    TextField("payments.session_id", text: $viewModel.sessionID)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
 
@@ -32,9 +32,9 @@ struct PaymentsView: View {
                         Text("payments.type_zelle").tag(PaymentMethodType.zelle)
                         Text("payments.type_other").tag(PaymentMethodType.other)
                     }
-                    TextField(String(localized: "payments.method_label"), text: $viewModel.newMethodLabel)
-                    TextField(String(localized: "payments.method_account_ref"), text: $viewModel.newMethodAccountRef)
-                    TextField(String(localized: "payments.method_deep_link"), text: $viewModel.newMethodDeepLink)
+                    TextField("payments.method_label", text: $viewModel.newMethodLabel)
+                    TextField("payments.method_account_ref", text: $viewModel.newMethodAccountRef)
+                    TextField("payments.method_deep_link", text: $viewModel.newMethodDeepLink)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
 
@@ -44,19 +44,19 @@ struct PaymentsView: View {
                 }
 
                 Section("payments.section_upsert_record") {
-                    TextField(String(localized: "payments.participant_id"), text: $viewModel.recordParticipantID)
+                    TextField("payments.participant_id", text: $viewModel.recordParticipantID)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
-                    TextField(String(localized: "payments.base_fee"), text: $viewModel.recordBaseFeeAmount)
+                    TextField("payments.base_fee", text: $viewModel.recordBaseFeeAmount)
                         .keyboardType(.decimalPad)
-                    TextField(String(localized: "payments.late_fee"), text: $viewModel.recordLateUsageFeeAmount)
+                    TextField("payments.late_fee", text: $viewModel.recordLateUsageFeeAmount)
                         .keyboardType(.decimalPad)
                     Picker("payments.status", selection: $viewModel.recordStatus) {
                         Text("payments.status_unpaid").tag(PaymentStatus.unpaid)
                         Text("payments.status_paid").tag(PaymentStatus.paid)
                         Text("payments.status_waived").tag(PaymentStatus.waived)
                     }
-                    TextField(String(localized: "payments.note"), text: $viewModel.recordNote)
+                    TextField("payments.note", text: $viewModel.recordNote)
 
                     Button("payments.save_record") {
                         Task { await viewModel.upsertPaymentRecord() }

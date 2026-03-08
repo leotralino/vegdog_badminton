@@ -19,8 +19,10 @@ targets:
       - path: App
       - path: Core
       - path: Features
-    resources:
       - path: Resources
+        buildPhase: resources
+        excludes:
+          - Info.plist
     info:
       path: Resources/Info.plist
       properties:

@@ -1,0 +1,543 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		059F490BDA4E919FCD68C047 /* SessionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146AF566A91AAA837A23A969 /* SessionDetailView.swift */; };
+		098DEE0B4FF1B9A2C98BDE4C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E5D4D1FC9B755054D859F688 /* Localizable.strings */; };
+		1718B3AD87B87CD9EBF74846 /* vegdog_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 231E17B6FF66E3ADA69B1F32 /* vegdog_logo.png */; };
+		1E0013500932D9FB46B3F420 /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C9845DEFF29ACB27D4F4580 /* AppRootView.swift */; };
+		1F9629DAAFB20B8F5C007BE4 /* BadmintonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A672091898F4DBADE33974 /* BadmintonService.swift */; };
+		371D11196364E6D77C8AE203 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA7CDAF6ABB5140CDEAB03F /* APIClient.swift */; };
+		37440777C72A501405890A8A /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11296F7470AB5866D841EF7F /* AuthView.swift */; };
+		37995E3868C24A1777672019 /* LanguageSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A176853B661294601D1F37 /* LanguageSettings.swift */; };
+		3FABC35A0ACFAA4B896AE732 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CA872A2D70EDCBBC518DC1 /* PaymentsViewModel.swift */; };
+		484C3882859F5E1B3934F939 /* vegdog_logo.svg in Resources */ = {isa = PBXBuildFile; fileRef = FCF795413B97DC5C29D92EC2 /* vegdog_logo.svg */; };
+		57EF5BA54A8DEA0850F2F737 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7882A04EFBA279709A21FAF /* APIError.swift */; };
+		5C2EB9E13E6FE76E94BBC789 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C513ED3682112011E133AF7E /* AppState.swift */; };
+		633EC3080E45528F215E6B72 /* VegDogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524825DC9D62B0EC6F84FCB6 /* VegDogApp.swift */; };
+		6348F5C9E7D3889AA78ED128 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844B09067EAB458DFE19A7FC /* InfoPlist.strings */; };
+		6D950F79F603B4CB644D7A1C /* MockBadmintonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E53A55225D4361903ECC21 /* MockBadmintonService.swift */; };
+		7B01EDADA86F64436DBE54BA /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661392505507D4C2279C536 /* AppEnvironment.swift */; };
+		94BE48B744B917CE83199D43 /* SessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB37DB6CE94DC3D72C8765 /* SessionListView.swift */; };
+		9A521D641716C9313FB603F0 /* SessionCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EE67440A840B5C3479C159 /* SessionCreateView.swift */; };
+		A909BDE4DF1CDC837021EBFD /* PaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E92A1B500448F562F0CCD5 /* PaymentsView.swift */; };
+		B7B15255B7FBA20EA28E37DD /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827F559D4E79765F8486F7BE /* AppContainer.swift */; };
+		C9E10861818F55A5A8DDF814 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F6C182A284CB388B36346 /* SessionsViewModel.swift */; };
+		CF41B562C55F1EE4622F9452 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF9181A2393133D2725214AD /* APIModels.swift */; };
+		D7400BE9A6435279DBE11E0E /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E350339846047FB2BE64A15C /* APIEndpoint.swift */; };
+		DD52054B70DD6189BB7E0897 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E23D12550623941D68F1D79 /* AuthViewModel.swift */; };
+		E95F3D576826E620884167A2 /* VegDogLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF33C3D2626B932FC11F8E57 /* VegDogLogoView.swift */; };
+		E9CF5F34572A2088E300D89B /* LanguageToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD72301744446A6C95D8CD /* LanguageToggleButton.swift */; };
+		EC31C09D16D70160E459B69D /* SessionCreateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246A5EC8B3E220CEADB05A3F /* SessionCreateViewModel.swift */; };
+		ED0A23B0876249261D9D2C20 /* SessionDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6529F998D35D5265B5879006 /* SessionDetailViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0409A88361A0633633209153 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		08A672091898F4DBADE33974 /* BadmintonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadmintonService.swift; sourceTree = "<group>"; };
+		0CFD72301744446A6C95D8CD /* LanguageToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageToggleButton.swift; sourceTree = "<group>"; };
+		0D8F2A0E14BE42845CEB1963 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		0E23D12550623941D68F1D79 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		11296F7470AB5866D841EF7F /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		114ABCCAC602BBFFC0FF09A2 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		146AF566A91AAA837A23A969 /* SessionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailView.swift; sourceTree = "<group>"; };
+		14BB37DB6CE94DC3D72C8765 /* SessionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListView.swift; sourceTree = "<group>"; };
+		16E53A55225D4361903ECC21 /* MockBadmintonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBadmintonService.swift; sourceTree = "<group>"; };
+		231E17B6FF66E3ADA69B1F32 /* vegdog_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vegdog_logo.png; sourceTree = "<group>"; };
+		246A5EC8B3E220CEADB05A3F /* SessionCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCreateViewModel.swift; sourceTree = "<group>"; };
+		25CA872A2D70EDCBBC518DC1 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
+		2757F02199161A90E41EEB9D /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3A833EE9822BCC1EE8947ED9 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		524825DC9D62B0EC6F84FCB6 /* VegDogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegDogApp.swift; sourceTree = "<group>"; };
+		6529F998D35D5265B5879006 /* SessionDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionDetailViewModel.swift; sourceTree = "<group>"; };
+		827F559D4E79765F8486F7BE /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		898C145BED86F107DBBCEF96 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		95505ACA260181D62E527BA5 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		9661392505507D4C2279C536 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		99E88E06E99F0DFC9A3235C9 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		9C9845DEFF29ACB27D4F4580 /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
+		A98F6C182A284CB388B36346 /* SessionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
+		AAD227D333CD96A3A9354DB2 /* VegDog.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = VegDog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AFE4DF47A7F317E80DF8D797 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		B2A176853B661294601D1F37 /* LanguageSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageSettings.swift; sourceTree = "<group>"; };
+		B2E92A1B500448F562F0CCD5 /* PaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsView.swift; sourceTree = "<group>"; };
+		C4350374BB8C39481BDBB7CA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C513ED3682112011E133AF7E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		C7882A04EFBA279709A21FAF /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		CAA7CDAF6ABB5140CDEAB03F /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		CC0BDD63F5935A34C1006980 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		CF33C3D2626B932FC11F8E57 /* VegDogLogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegDogLogoView.swift; sourceTree = "<group>"; };
+		D041145296889EA64AC2124C /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		D2EE67440A840B5C3479C159 /* SessionCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCreateView.swift; sourceTree = "<group>"; };
+		DF9181A2393133D2725214AD /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
+		E350339846047FB2BE64A15C /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		FCF795413B97DC5C29D92EC2 /* vegdog_logo.svg */ = {isa = PBXFileReference; path = vegdog_logo.svg; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		05F284E338BA1AACB389FC58 /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				0409A88361A0633633209153 /* .gitkeep */,
+				B2E92A1B500448F562F0CCD5 /* PaymentsView.swift */,
+				25CA872A2D70EDCBBC518DC1 /* PaymentsViewModel.swift */,
+			);
+			path = Payments;
+			sourceTree = "<group>";
+		};
+		13A89CFC847D16199594B7BA /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				654E1A0CEF588088055AB2C5 /* Auth */,
+				FCDA57511DC7A5F5EB590470 /* Matches */,
+				05F284E338BA1AACB389FC58 /* Payments */,
+				3D759BC5D589B8FEEF301D0E /* Sessions */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		1B4EBC6803F4399DD4D6184C = {
+			isa = PBXGroup;
+			children = (
+				6D6397B143ED093B107D4092 /* App */,
+				7B5E5C30AB75F7B3DE5AE737 /* Core */,
+				13A89CFC847D16199594B7BA /* Features */,
+				7A23AE5D6BAD06DC6464ED87 /* Resources */,
+				DCC6741AF3534C7CF480BE9C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3D759BC5D589B8FEEF301D0E /* Sessions */ = {
+			isa = PBXGroup;
+			children = (
+				0D8F2A0E14BE42845CEB1963 /* .gitkeep */,
+				D2EE67440A840B5C3479C159 /* SessionCreateView.swift */,
+				246A5EC8B3E220CEADB05A3F /* SessionCreateViewModel.swift */,
+				146AF566A91AAA837A23A969 /* SessionDetailView.swift */,
+				6529F998D35D5265B5879006 /* SessionDetailViewModel.swift */,
+				14BB37DB6CE94DC3D72C8765 /* SessionListView.swift */,
+				A98F6C182A284CB388B36346 /* SessionsViewModel.swift */,
+			);
+			path = Sessions;
+			sourceTree = "<group>";
+		};
+		6497B6DB8D065010B62D3EF3 /* Brand */ = {
+			isa = PBXGroup;
+			children = (
+				231E17B6FF66E3ADA69B1F32 /* vegdog_logo.png */,
+				FCF795413B97DC5C29D92EC2 /* vegdog_logo.svg */,
+			);
+			path = Brand;
+			sourceTree = "<group>";
+		};
+		654E1A0CEF588088055AB2C5 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				95505ACA260181D62E527BA5 /* .gitkeep */,
+				11296F7470AB5866D841EF7F /* AuthView.swift */,
+				0E23D12550623941D68F1D79 /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		6D6397B143ED093B107D4092 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				114ABCCAC602BBFFC0FF09A2 /* .gitkeep */,
+				827F559D4E79765F8486F7BE /* AppContainer.swift */,
+				9C9845DEFF29ACB27D4F4580 /* AppRootView.swift */,
+				C513ED3682112011E133AF7E /* AppState.swift */,
+				524825DC9D62B0EC6F84FCB6 /* VegDogApp.swift */,
+				CF33C3D2626B932FC11F8E57 /* VegDogLogoView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		7A23AE5D6BAD06DC6464ED87 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				844B09067EAB458DFE19A7FC /* InfoPlist.strings */,
+				E5D4D1FC9B755054D859F688 /* Localizable.strings */,
+				6497B6DB8D065010B62D3EF3 /* Brand */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7B5E5C30AB75F7B3DE5AE737 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				7D53BF51ECFE3E52DB7A8E96 /* Models */,
+				EDAA99C7D4F9F6968B85FFE2 /* Networking */,
+				BE24A56D44ED5495E5CA398C /* Utils */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		7D53BF51ECFE3E52DB7A8E96 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				CC0BDD63F5935A34C1006980 /* .gitkeep */,
+				DF9181A2393133D2725214AD /* APIModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BE24A56D44ED5495E5CA398C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3A833EE9822BCC1EE8947ED9 /* .gitkeep */,
+				9661392505507D4C2279C536 /* AppEnvironment.swift */,
+				B2A176853B661294601D1F37 /* LanguageSettings.swift */,
+				0CFD72301744446A6C95D8CD /* LanguageToggleButton.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DCC6741AF3534C7CF480BE9C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AAD227D333CD96A3A9354DB2 /* VegDog.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EDAA99C7D4F9F6968B85FFE2 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D041145296889EA64AC2124C /* .gitkeep */,
+				CAA7CDAF6ABB5140CDEAB03F /* APIClient.swift */,
+				E350339846047FB2BE64A15C /* APIEndpoint.swift */,
+				C7882A04EFBA279709A21FAF /* APIError.swift */,
+				08A672091898F4DBADE33974 /* BadmintonService.swift */,
+				16E53A55225D4361903ECC21 /* MockBadmintonService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		FCDA57511DC7A5F5EB590470 /* Matches */ = {
+			isa = PBXGroup;
+			children = (
+				99E88E06E99F0DFC9A3235C9 /* .gitkeep */,
+			);
+			path = Matches;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1272D9EEE333CEA146E924 /* VegDog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 272778D977BFC336C0D832B3 /* Build configuration list for PBXNativeTarget "VegDog" */;
+			buildPhases = (
+				C5AB6296EC335D78E6473CE6 /* Sources */,
+				606F3A2EE3EE5D2B3DE85053 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VegDog;
+			packageProductDependencies = (
+			);
+			productName = VegDog;
+			productReference = AAD227D333CD96A3A9354DB2 /* VegDog.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		894CD9B03B1463F2BE51EBDA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					8D1272D9EEE333CEA146E924 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 5C405C06B35E7583E30F88A1 /* Build configuration list for PBXProject "VegDog" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				"zh-Hans",
+			);
+			mainGroup = 1B4EBC6803F4399DD4D6184C;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1272D9EEE333CEA146E924 /* VegDog */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		606F3A2EE3EE5D2B3DE85053 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6348F5C9E7D3889AA78ED128 /* InfoPlist.strings in Resources */,
+				098DEE0B4FF1B9A2C98BDE4C /* Localizable.strings in Resources */,
+				1718B3AD87B87CD9EBF74846 /* vegdog_logo.png in Resources */,
+				484C3882859F5E1B3934F939 /* vegdog_logo.svg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C5AB6296EC335D78E6473CE6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				371D11196364E6D77C8AE203 /* APIClient.swift in Sources */,
+				D7400BE9A6435279DBE11E0E /* APIEndpoint.swift in Sources */,
+				57EF5BA54A8DEA0850F2F737 /* APIError.swift in Sources */,
+				CF41B562C55F1EE4622F9452 /* APIModels.swift in Sources */,
+				B7B15255B7FBA20EA28E37DD /* AppContainer.swift in Sources */,
+				7B01EDADA86F64436DBE54BA /* AppEnvironment.swift in Sources */,
+				1E0013500932D9FB46B3F420 /* AppRootView.swift in Sources */,
+				5C2EB9E13E6FE76E94BBC789 /* AppState.swift in Sources */,
+				37440777C72A501405890A8A /* AuthView.swift in Sources */,
+				DD52054B70DD6189BB7E0897 /* AuthViewModel.swift in Sources */,
+				1F9629DAAFB20B8F5C007BE4 /* BadmintonService.swift in Sources */,
+				37995E3868C24A1777672019 /* LanguageSettings.swift in Sources */,
+				E9CF5F34572A2088E300D89B /* LanguageToggleButton.swift in Sources */,
+				6D950F79F603B4CB644D7A1C /* MockBadmintonService.swift in Sources */,
+				A909BDE4DF1CDC837021EBFD /* PaymentsView.swift in Sources */,
+				3FABC35A0ACFAA4B896AE732 /* PaymentsViewModel.swift in Sources */,
+				9A521D641716C9313FB603F0 /* SessionCreateView.swift in Sources */,
+				EC31C09D16D70160E459B69D /* SessionCreateViewModel.swift in Sources */,
+				059F490BDA4E919FCD68C047 /* SessionDetailView.swift in Sources */,
+				ED0A23B0876249261D9D2C20 /* SessionDetailViewModel.swift in Sources */,
+				94BE48B744B917CE83199D43 /* SessionListView.swift in Sources */,
+				C9E10861818F55A5A8DDF814 /* SessionsViewModel.swift in Sources */,
+				633EC3080E45528F215E6B72 /* VegDogApp.swift in Sources */,
+				E95F3D576826E620884167A2 /* VegDogLogoView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		844B09067EAB458DFE19A7FC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C4350374BB8C39481BDBB7CA /* en */,
+				AFE4DF47A7F317E80DF8D797 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E5D4D1FC9B755054D859F688 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				898C145BED86F107DBBCEF96 /* en */,
+				2757F02199161A90E41EEB9D /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		23F90C203AD645729B68E79E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vegdog.vegdog;
+				PRODUCT_NAME = VegDog;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		27A3B2FC697E39DCAD81461A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = VegDog;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.1;
+			};
+			name = Debug;
+		};
+		BDAFEB4608A3F584CA7538C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = VegDog;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.1;
+			};
+			name = Release;
+		};
+		DFEECEF6420573D5FEA5B178 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vegdog.vegdog;
+				PRODUCT_NAME = VegDog;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		272778D977BFC336C0D832B3 /* Build configuration list for PBXNativeTarget "VegDog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFEECEF6420573D5FEA5B178 /* Debug */,
+				23F90C203AD645729B68E79E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5C405C06B35E7583E30F88A1 /* Build configuration list for PBXProject "VegDog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				27A3B2FC697E39DCAD81461A /* Debug */,
+				BDAFEB4608A3F584CA7538C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 894CD9B03B1463F2BE51EBDA /* Project object */;
+}
