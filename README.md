@@ -1,18 +1,30 @@
 # VegDog Badminton
 
-[中文文档](./README.zh-CN.md)
-
 <p align="center">
   <img src="./app/ios/Resources/Brand/vegdog_logo.png" alt="VegDog Logo" width="160" />
 </p>
 
+<p align="center">
+  <b><a href="./README.md">English</a></b> | <a href="./README.zh-CN.md">中文</a>
+</p>
+
 VegDog (`菜狗`) is an iOS-first app for badminton friend groups to run queue signups (接龙), manage late-withdraw logic, and share payment links.
 
+<p align="center">
+  <img src="https://img.shields.io/badge/iOS-17.0+-0A84FF.svg" alt="iOS 17+">
+  <img src="https://img.shields.io/badge/Swift-5.10-F05138.svg?logo=swift&logoColor=white" alt="Swift 5.10">
+  <img src="https://img.shields.io/badge/UI-SwiftUI-0A84FF.svg" alt="SwiftUI">
+  <img src="https://img.shields.io/badge/architecture-MVVM-34C759.svg" alt="MVVM">
+  <img src="https://img.shields.io/badge/API-OpenAPI%203.0.3-6E56CF.svg" alt="OpenAPI 3.0.3">
+  <img src="https://img.shields.io/badge/project-XcodeGen-111111.svg" alt="XcodeGen">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License">
+</p>
+
 ## Tech Stack
-- iOS: Swift 5.10, SwiftUI, MVVM, async/await
-- API layer: OpenAPI 3.0.3 contract at `backend/openapi/openapi.yaml`
-- Project generation: XcodeGen (`app/ios/project.yml`)
-- Current runtime mode: mock service by default (`USE_MOCK_SERVICE=true`)
+- iOS client: Swift 5.10, SwiftUI, MVVM, async/await
+- API contract: OpenAPI 3.0.3 at `backend/openapi/openapi.yaml`
+- Project generation: XcodeGen from `app/ios/project.yml`
+- Runtime mode: mock service by default (`USE_MOCK_SERVICE=true`)
 - Localization: English + Simplified Chinese (`en.lproj`, `zh-Hans.lproj`)
 
 ## Product Roadmap

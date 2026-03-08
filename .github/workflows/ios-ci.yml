@@ -1,0 +1,36 @@
+name: iOS CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: Generate and Build iOS App
+    runs-on: macos-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: app/ios
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode Project
+        run: ./scripts/generate_xcodeproj.sh
+
+      - name: Build (no code signing)
+        run: |
+          xcodebuild \
+            -project VegDog.xcodeproj \
+            -scheme VegDog \
+            -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            build

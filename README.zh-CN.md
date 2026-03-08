@@ -1,12 +1,24 @@
 # 菜狗羽球 (VegDog Badminton)
 
-[English](./README.md)
-
 <p align="center">
   <img src="./app/ios/Resources/Brand/vegdog_logo.png" alt="VegDog Logo" width="160" />
 </p>
 
+<p align="center">
+  <a href="./README.md">English</a> | <b><a href="./README.zh-CN.md">中文</a></b>
+</p>
+
 菜狗（VegDog）是一个以 iOS 为优先的羽球约球应用，面向熟人球友群，支持接龙报名、晚退规则处理、收款方式分享。
+
+<p align="center">
+  <img src="https://img.shields.io/badge/iOS-17.0+-0A84FF.svg" alt="iOS 17+">
+  <img src="https://img.shields.io/badge/Swift-5.10-F05138.svg?logo=swift&logoColor=white" alt="Swift 5.10">
+  <img src="https://img.shields.io/badge/UI-SwiftUI-0A84FF.svg" alt="SwiftUI">
+  <img src="https://img.shields.io/badge/architecture-MVVM-34C759.svg" alt="MVVM">
+  <img src="https://img.shields.io/badge/API-OpenAPI%203.0.3-6E56CF.svg" alt="OpenAPI 3.0.3">
+  <img src="https://img.shields.io/badge/project-XcodeGen-111111.svg" alt="XcodeGen">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License">
+</p>
 
 ## 技术栈
 - iOS：Swift 5.10、SwiftUI、MVVM、async/await
