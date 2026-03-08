@@ -20,13 +20,6 @@ VegDog (`菜狗`) is an iOS-first app for badminton friend groups to run queue s
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License">
 </p>
 
-## Tech Stack
-- iOS client: Swift 5.10, SwiftUI, MVVM, async/await
-- API contract: OpenAPI 3.0.3 at `backend/openapi/openapi.yaml`
-- Project generation: XcodeGen from `app/ios/project.yml`
-- Runtime mode: mock service by default (`USE_MOCK_SERVICE=true`)
-- Localization: English + Simplified Chinese (`en.lproj`, `zh-Hans.lproj`)
-
 ## Product Roadmap
 - MVP
   - WeChat login

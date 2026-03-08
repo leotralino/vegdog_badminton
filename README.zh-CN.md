@@ -20,13 +20,6 @@
   <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License">
 </p>
 
-## 技术栈
-- iOS：Swift 5.10、SwiftUI、MVVM、async/await
-- API：OpenAPI 3.0.3（`backend/openapi/openapi.yaml`）
-- 工程管理：XcodeGen（`app/ios/project.yml`）
-- 当前运行模式：默认 Mock 服务（`USE_MOCK_SERVICE=true`）
-- 本地化：英文 + 简体中文（`en.lproj`、`zh-Hans.lproj`）
-
 ## 产品路线图
 - MVP
   - 微信登录
