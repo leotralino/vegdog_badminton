@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		05C869A48BB86F228091EE46 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4080945A9D430C3FF556023 /* AppState.swift */; };
+		2DC1FA64F3779F0206BD7D91 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902D85364EA60D7878D4ABD8 /* SessionsViewModel.swift */; };
+		2F6A8D822BF72323D1AD2A1C /* BadmintonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16777E5A3FA0CFA95C79F6 /* BadmintonService.swift */; };
+		31144B66157328F0CBA72BBD /* BadmintonFriendsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499730A01C937E8CDC021E7 /* BadmintonFriendsApp.swift */; };
+		363629D42D62010E51F53006 /* AppRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F005A058EDE67874CC24E7E1 /* AppRootView.swift */; };
+		47603D442544D1F00B46CB18 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5C08B41760D3FD267D30DC /* AuthViewModel.swift */; };
+		790A57E259DDEB0F352733FC /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367FEF648613904EAA02054C /* APIModels.swift */; };
+		7BDC5F9EF8447DA13D68B4F9 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E48265C38FA374E81FE22 /* APIEndpoint.swift */; };
+		8FE67F3307AD4EC2FED78846 /* SessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F595595B6E2BFCA1106AF4CA /* SessionListView.swift */; };
+		B0BACC4CD935E3C54D70199D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94421D31A0A18D4F357F3850 /* APIClient.swift */; };
+		C8203ACEAD9F529ECC205DBD /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ED3D7EB79189E9B1458D9 /* AppEnvironment.swift */; };
+		C87C233D74D7AB5CE401A456 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4073DDC6E60667FCFF1CDF /* AuthView.swift */; };
+		CB4CB0AB0F3CDE2E727372D5 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463144E39333DFA5E998F0E /* APIError.swift */; };
+		FBB0AB543354175108C10B08 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF0C1A433E97C3D52E2EA0 /* AppContainer.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		367FEF648613904EAA02054C /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
+		4499730A01C937E8CDC021E7 /* BadmintonFriendsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadmintonFriendsApp.swift; sourceTree = "<group>"; };
+		4C16777E5A3FA0CFA95C79F6 /* BadmintonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadmintonService.swift; sourceTree = "<group>"; };
+		4DDAECCCE9D2CFF106F3FAA6 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		5B4073DDC6E60667FCFF1CDF /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		6C420C33817863A44BA5EEA9 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		6E0ED3D7EB79189E9B1458D9 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		850593FA0E265BC2616CBAD9 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		902D85364EA60D7878D4ABD8 /* SessionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsViewModel.swift; sourceTree = "<group>"; };
+		94421D31A0A18D4F357F3850 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		A106B40FE23C363EED8C32C8 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		A25D4798014938BFD26ADCEA /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		AB5C08B41760D3FD267D30DC /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		B0BA6BACB056F16AD5B8E4B5 /* BadmintonFriends.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BadmintonFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4080945A9D430C3FF556023 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		D463144E39333DFA5E998F0E /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		D491D6521E25C44A776290B6 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		D90DC37FC60833A2D2381DA9 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		F005A058EDE67874CC24E7E1 /* AppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRootView.swift; sourceTree = "<group>"; };
+		F511136FD992BE267B48378E /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		F595595B6E2BFCA1106AF4CA /* SessionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListView.swift; sourceTree = "<group>"; };
+		FD3E48265C38FA374E81FE22 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		FFDF0C1A433E97C3D52E2EA0 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		177493154B8731FB98C55103 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				ADF46148BBF14D0F2C4C57BE /* Auth */,
+				CFFC3CE30C7D41C14E373A7F /* Matches */,
+				EFE82410D758130CC8CD3A1C /* Payments */,
+				69DE6495A0F7CA95A73FDE38 /* Sessions */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		18653058FFE96BE0812957CF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A25D4798014938BFD26ADCEA /* .gitkeep */,
+				367FEF648613904EAA02054C /* APIModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		24F89D879FB78BBCB8063A85 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				18653058FFE96BE0812957CF /* Models */,
+				6C3258CED11A068CA2F35DA7 /* Networking */,
+				D0D691FD96A3B5C9245A0BD9 /* Utils */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		69DE6495A0F7CA95A73FDE38 /* Sessions */ = {
+			isa = PBXGroup;
+			children = (
+				4DDAECCCE9D2CFF106F3FAA6 /* .gitkeep */,
+				F595595B6E2BFCA1106AF4CA /* SessionListView.swift */,
+				902D85364EA60D7878D4ABD8 /* SessionsViewModel.swift */,
+			);
+			path = Sessions;
+			sourceTree = "<group>";
+		};
+		6C3258CED11A068CA2F35DA7 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				850593FA0E265BC2616CBAD9 /* .gitkeep */,
+				94421D31A0A18D4F357F3850 /* APIClient.swift */,
+				FD3E48265C38FA374E81FE22 /* APIEndpoint.swift */,
+				D463144E39333DFA5E998F0E /* APIError.swift */,
+				4C16777E5A3FA0CFA95C79F6 /* BadmintonService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		871EE18DFEF1CD206F757103 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B0BA6BACB056F16AD5B8E4B5 /* BadmintonFriends.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADF46148BBF14D0F2C4C57BE /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				D491D6521E25C44A776290B6 /* .gitkeep */,
+				5B4073DDC6E60667FCFF1CDF /* AuthView.swift */,
+				AB5C08B41760D3FD267D30DC /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		B8797FCF77BAF0723B5ED71F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A106B40FE23C363EED8C32C8 /* .gitkeep */,
+				FFDF0C1A433E97C3D52E2EA0 /* AppContainer.swift */,
+				F005A058EDE67874CC24E7E1 /* AppRootView.swift */,
+				D4080945A9D430C3FF556023 /* AppState.swift */,
+				4499730A01C937E8CDC021E7 /* BadmintonFriendsApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		CFFC3CE30C7D41C14E373A7F /* Matches */ = {
+			isa = PBXGroup;
+			children = (
+				6C420C33817863A44BA5EEA9 /* .gitkeep */,
+			);
+			path = Matches;
+			sourceTree = "<group>";
+		};
+		D0D691FD96A3B5C9245A0BD9 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D90DC37FC60833A2D2381DA9 /* .gitkeep */,
+				6E0ED3D7EB79189E9B1458D9 /* AppEnvironment.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		EFE82410D758130CC8CD3A1C /* Payments */ = {
+			isa = PBXGroup;
+			children = (
+				F511136FD992BE267B48378E /* .gitkeep */,
+			);
+			path = Payments;
+			sourceTree = "<group>";
+		};
+		FB1B6DFEA225C939190D917F = {
+			isa = PBXGroup;
+			children = (
+				B8797FCF77BAF0723B5ED71F /* App */,
+				24F89D879FB78BBCB8063A85 /* Core */,
+				177493154B8731FB98C55103 /* Features */,
+				871EE18DFEF1CD206F757103 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BF7BF42618FD40962516E7D2 /* BadmintonFriends */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6920072EBA1E72913F08AB8B /* Build configuration list for PBXNativeTarget "BadmintonFriends" */;
+			buildPhases = (
+				9D4D9AC68F63B350DD49806B /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BadmintonFriends;
+			packageProductDependencies = (
+			);
+			productName = BadmintonFriends;
+			productReference = B0BA6BACB056F16AD5B8E4B5 /* BadmintonFriends.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6321BEACC4DD281CEA394F7F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					BF7BF42618FD40962516E7D2 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 6B5160C88221AE9246AC6D08 /* Build configuration list for PBXProject "BadmintonFriends" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = FB1B6DFEA225C939190D917F;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BF7BF42618FD40962516E7D2 /* BadmintonFriends */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9D4D9AC68F63B350DD49806B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0BACC4CD935E3C54D70199D /* APIClient.swift in Sources */,
+				7BDC5F9EF8447DA13D68B4F9 /* APIEndpoint.swift in Sources */,
+				CB4CB0AB0F3CDE2E727372D5 /* APIError.swift in Sources */,
+				790A57E259DDEB0F352733FC /* APIModels.swift in Sources */,
+				FBB0AB543354175108C10B08 /* AppContainer.swift in Sources */,
+				C8203ACEAD9F529ECC205DBD /* AppEnvironment.swift in Sources */,
+				363629D42D62010E51F53006 /* AppRootView.swift in Sources */,
+				05C869A48BB86F228091EE46 /* AppState.swift in Sources */,
+				C87C233D74D7AB5CE401A456 /* AuthView.swift in Sources */,
+				47603D442544D1F00B46CB18 /* AuthViewModel.swift in Sources */,
+				31144B66157328F0CBA72BBD /* BadmintonFriendsApp.swift in Sources */,
+				2F6A8D822BF72323D1AD2A1C /* BadmintonService.swift in Sources */,
+				8FE67F3307AD4EC2FED78846 /* SessionListView.swift in Sources */,
+				2DC1FA64F3779F0206BD7D91 /* SessionsViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		137A07C03F48D9DF196C8B5C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vegdog.badmintonfriends;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9A01BA29A4598539A3FD300A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = BadmintonFriends;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.1;
+			};
+			name = Debug;
+		};
+		B45C64698BD314E919D4AB2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vegdog.badmintonfriends;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D31E8D3E84E2628FA5079275 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = BadmintonFriends;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6920072EBA1E72913F08AB8B /* Build configuration list for PBXNativeTarget "BadmintonFriends" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				137A07C03F48D9DF196C8B5C /* Debug */,
+				B45C64698BD314E919D4AB2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6B5160C88221AE9246AC6D08 /* Build configuration list for PBXProject "BadmintonFriends" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A01BA29A4598539A3FD300A /* Debug */,
+				D31E8D3E84E2628FA5079275 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6321BEACC4DD281CEA394F7F /* Project object */;
+}
