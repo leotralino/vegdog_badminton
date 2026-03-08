@@ -3,6 +3,7 @@ import SwiftUI
 struct SessionListView: View {
     @ObservedObject var viewModel: SessionsViewModel
     let service: BadmintonServiceProtocol
+    let currentUserID: String?
     let onSignOut: () -> Void
     @State private var isPresentingCreate = false
     @State private var selectedSessionID: String?
@@ -82,6 +83,7 @@ struct SessionListView: View {
                         SessionDetailView(
                             viewModel: SessionDetailViewModel(
                                 sessionID: selectedSessionID,
+                                currentUserID: currentUserID,
                                 service: service
                             )
                         )
@@ -109,6 +111,9 @@ private struct SessionRowView: View {
                 .foregroundStyle(.secondary)
 
             Text("Courts: \(session.courtCount)  Max: \(session.maxParticipants)")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+            Text("Initiator: \(session.initiatorUser.nickname)")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
 

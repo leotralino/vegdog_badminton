@@ -19,6 +19,7 @@ struct AppRootView: View {
                     SessionListView(
                         viewModel: sessionsViewModel,
                         service: container.service,
+                        currentUserID: appState.currentUser?.id,
                         onSignOut: signOut
                     )
                     .tabItem {

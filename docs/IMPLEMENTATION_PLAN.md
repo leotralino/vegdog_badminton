@@ -8,6 +8,8 @@
 ## Phase 1: MVP
 - WeChat login.
 - Session CRUD (admin).
+- Role model: any member can create session; creator becomes initiator + default session admin.
+- Session admin management: existing session admins can add other session admins.
 - Join/waitlist/withdraw logic with deadline enforcement.
 - Roster finalization flow (`finalize_at`) to lock replacement decisions.
 - Settlement logic for late withdraw:

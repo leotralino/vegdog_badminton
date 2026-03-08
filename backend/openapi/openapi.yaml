@@ -123,6 +123,44 @@ paths:
               schema:
                 $ref: "#/components/schemas/WithdrawResult"
 
+  /sessions/{sessionId}/admins:
+    get:
+      tags: [Sessions]
+      summary: List session admins
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      responses:
+        "200":
+          description: Session admins list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/SessionAdmin"
+                required: [items]
+    post:
+      tags: [Sessions]
+      summary: Add session admin (existing session admin only)
+      parameters:
+        - $ref: "#/components/parameters/SessionId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddSessionAdminRequest"
+      responses:
+        "201":
+          description: Added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SessionAdmin"
+
   /sessions/{sessionId}/participants/{participantId}:
     patch:
       tags: [Sessions]
@@ -350,6 +388,12 @@ components:
           $ref: "#/components/schemas/SessionStatus"
         fee_rule:
           $ref: "#/components/schemas/FeeRule"
+        initiator_user:
+          $ref: "#/components/schemas/User"
+        admin_user_ids:
+          type: array
+          items:
+            type: string
       required:
         [
           id,
@@ -360,7 +404,9 @@ components:
           max_participants,
           withdraw_deadline,
           status,
-          fee_rule
+          fee_rule,
+          initiator_user,
+          admin_user_ids
         ]
 
     SessionDetail:
@@ -368,11 +414,31 @@ components:
         - $ref: "#/components/schemas/Session"
         - type: object
           properties:
+            initiator_user:
+              $ref: "#/components/schemas/User"
+            admins:
+              type: array
+              items:
+                $ref: "#/components/schemas/SessionAdmin"
             participants:
               type: array
               items:
                 $ref: "#/components/schemas/SessionParticipant"
-          required: [participants]
+          required: [initiator_user, admins, participants]
+
+    SessionAdmin:
+      type: object
+      properties:
+        id:
+          type: string
+        user_id:
+          type: string
+        nickname:
+          type: string
+        added_at:
+          type: string
+          format: date-time
+      required: [id, user_id, nickname, added_at]
 
     SessionParticipant:
       type: object
@@ -433,6 +499,15 @@ components:
         admin_note:
           type: string
       additionalProperties: false
+
+    AddSessionAdminRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+        nickname:
+          type: string
+      required: [user_id]
 
     CreatePaymentMethodRequest:
       type: object

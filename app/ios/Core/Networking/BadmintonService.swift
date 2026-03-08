@@ -8,6 +8,8 @@ protocol BadmintonServiceProtocol {
     func finalizeSession(sessionID: String) async throws -> Session
     func joinSession(sessionID: String) async throws -> SessionParticipant
     func withdrawSession(sessionID: String) async throws -> WithdrawResult
+    func listSessionAdmins(sessionID: String) async throws -> [SessionAdmin]
+    func addSessionAdmin(sessionID: String, request: AddSessionAdminRequest) async throws -> SessionAdmin
     func updateParticipant(sessionID: String, participantID: String, request: UpdateParticipantRequest) async throws -> SessionParticipant
     func listPaymentMethods(sessionID: String) async throws -> [PaymentMethod]
     func createPaymentMethod(sessionID: String, request: CreatePaymentMethodRequest) async throws -> PaymentMethod
@@ -51,6 +53,15 @@ final class BadmintonService: BadmintonServiceProtocol {
 
     func withdrawSession(sessionID: String) async throws -> WithdrawResult {
         try await client.requestWithoutBody(.withdrawSession(sessionID: sessionID), responseType: WithdrawResult.self)
+    }
+
+    func listSessionAdmins(sessionID: String) async throws -> [SessionAdmin] {
+        let response = try await client.requestWithoutBody(.listSessionAdmins(sessionID: sessionID), responseType: SessionAdminsResponse.self)
+        return response.items
+    }
+
+    func addSessionAdmin(sessionID: String, request: AddSessionAdminRequest) async throws -> SessionAdmin {
+        try await client.request(.addSessionAdmin(sessionID: sessionID), body: request, responseType: SessionAdmin.self)
     }
 
     func updateParticipant(sessionID: String, participantID: String, request: UpdateParticipantRequest) async throws -> SessionParticipant {

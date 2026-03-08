@@ -14,6 +14,8 @@ enum APIEndpoint {
     case finalizeSession(sessionID: String)
     case joinSession(sessionID: String)
     case withdrawSession(sessionID: String)
+    case listSessionAdmins(sessionID: String)
+    case addSessionAdmin(sessionID: String)
     case updateParticipant(sessionID: String, participantID: String)
     case listPaymentMethods(sessionID: String)
     case createPaymentMethod(sessionID: String)
@@ -23,6 +25,8 @@ enum APIEndpoint {
     var method: HTTPMethod {
         switch self {
         case .listSessions, .sessionDetail, .listPaymentMethods, .listPaymentRecords:
+            return .get
+        case .listSessionAdmins:
             return .get
         case .updateParticipant:
             return .patch
@@ -45,6 +49,8 @@ enum APIEndpoint {
             return "/sessions/\(sessionID)/join"
         case .withdrawSession(let sessionID):
             return "/sessions/\(sessionID)/withdraw"
+        case .listSessionAdmins(let sessionID), .addSessionAdmin(let sessionID):
+            return "/sessions/\(sessionID)/admins"
         case .updateParticipant(let sessionID, let participantID):
             return "/sessions/\(sessionID)/participants/\(participantID)"
         case .listPaymentMethods(let sessionID), .createPaymentMethod(let sessionID):

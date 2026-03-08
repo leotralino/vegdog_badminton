@@ -5,13 +5,22 @@ final class SessionDetailViewModel: ObservableObject {
     @Published var detail: SessionDetail?
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var newAdminUserID: String = ""
+    @Published var newAdminNickname: String = ""
 
     let sessionID: String
+    let currentUserID: String?
     private let service: BadmintonServiceProtocol
 
-    init(sessionID: String, service: BadmintonServiceProtocol) {
+    init(sessionID: String, currentUserID: String?, service: BadmintonServiceProtocol) {
         self.sessionID = sessionID
+        self.currentUserID = currentUserID
         self.service = service
+    }
+
+    var isCurrentUserAdmin: Bool {
+        guard let currentUserID, let detail else { return false }
+        return detail.admins.contains(where: { $0.userID == currentUserID })
     }
 
     func load() async {
@@ -61,5 +70,30 @@ final class SessionDetailViewModel: ObservableObject {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+
+    func addAdmin() async {
+        let userID = newAdminUserID.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !userID.isEmpty else {
+            errorMessage = "Admin user ID is required."
+            return
+        }
+        do {
+            let request = AddSessionAdminRequest(
+                userID: userID,
+                nickname: trimmedOrNil(newAdminNickname)
+            )
+            _ = try await service.addSessionAdmin(sessionID: sessionID, request: request)
+            newAdminUserID = ""
+            newAdminNickname = ""
+            await load()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    private func trimmedOrNil(_ value: String) -> String? {
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
     }
 }

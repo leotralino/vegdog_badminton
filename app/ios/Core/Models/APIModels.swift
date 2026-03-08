@@ -72,6 +72,8 @@ struct Session: Codable, Identifiable {
     let finalizeAt: Date?
     let status: SessionStatus
     let feeRule: FeeRule
+    let initiatorUser: User
+    let adminUserIDs: [String]
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -85,6 +87,8 @@ struct Session: Codable, Identifiable {
         case finalizeAt = "finalize_at"
         case status
         case feeRule = "fee_rule"
+        case initiatorUser = "initiator_user"
+        case adminUserIDs = "admin_user_ids"
     }
 }
 
@@ -104,6 +108,8 @@ struct SessionDetail: Codable {
     let finalizeAt: Date?
     let status: SessionStatus
     let feeRule: FeeRule
+    let initiatorUser: User
+    let admins: [SessionAdmin]
     let participants: [SessionParticipant]
 
     enum CodingKeys: String, CodingKey {
@@ -118,8 +124,28 @@ struct SessionDetail: Codable {
         case finalizeAt = "finalize_at"
         case status
         case feeRule = "fee_rule"
+        case initiatorUser = "initiator_user"
+        case admins
         case participants
     }
+}
+
+struct SessionAdmin: Codable, Identifiable {
+    let id: String
+    let userID: String
+    let nickname: String
+    let addedAt: Date
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userID = "user_id"
+        case nickname
+        case addedAt = "added_at"
+    }
+}
+
+struct SessionAdminsResponse: Codable {
+    let items: [SessionAdmin]
 }
 
 struct SessionParticipant: Codable, Identifiable {
@@ -256,6 +282,16 @@ struct UpdateParticipantRequest: Codable {
     enum CodingKeys: String, CodingKey {
         case stayedLate = "stayed_late"
         case adminNote = "admin_note"
+    }
+}
+
+struct AddSessionAdminRequest: Codable {
+    let userID: String
+    let nickname: String?
+
+    enum CodingKeys: String, CodingKey {
+        case userID = "user_id"
+        case nickname
     }
 }
 

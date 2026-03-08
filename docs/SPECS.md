@@ -4,7 +4,8 @@
 Build an iOS app for badminton friends to organize sessions with queue sign-up (接龙), payment collection, and optional match tracking.
 
 ## 2. Core Roles
-- Admin: creates sessions, defines rules, tracks payments.
+- Initiator: any verified member can create sessions. Initiator name is visible on session list/detail.
+- Session Admin: initiator is default session admin; session admins can add other session admins.
 - Participant: joins or withdraws from sessions, pays organizer.
 
 ## 3. MVP Features
@@ -14,7 +15,7 @@ Build an iOS app for badminton friends to organize sessions with queue sign-up (
 - Basic profile: nickname, avatar, WeChat OpenID/UnionID mapping.
 
 ### 3.2 Queue / 接龙
-- Admin creates a session with:
+- Any member creates a session with:
   - title
   - date/time
   - location
@@ -33,8 +34,12 @@ Build an iOS app for badminton friends to organize sessions with queue sign-up (
   - If final attendee count is lower than `max participants` at `finalize_at`, unpaid empty spots are split across liable participants using the session fee rule.
 - Extra usage metadata:
   - Participant flag `stayed_late` indicates extra court usage (for example, extra hour after scheduled end).
-  - Admin sets this flag manually.
+- Session admin sets this flag manually.
   - Participants with `stayed_late` owe an additional fee defined by session settlement rules.
+- Session admin permissions:
+  - finalize roster (`finalize_at`)
+  - mark participant `stayed_late`
+  - add other session admins
 
 
 ### 3.3 Payment
@@ -98,7 +103,6 @@ Recommended for speed: start with Option A unless custom compliance requirements
 5. Match module add-on
 
 ## 9. Open Questions
-- Will only admins create sessions, or can any verified member create one?
 - Do we need automatic cost split per attendee count/court/time?
 - Should late withdrawal liability be full fee only, or configurable ratio (for example 50%)?
 - Is push notification needed for waitlist promotion and deadlines?

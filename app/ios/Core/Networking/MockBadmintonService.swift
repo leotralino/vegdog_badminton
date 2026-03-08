@@ -2,8 +2,11 @@ import Foundation
 
 final class MockBadmintonService: BadmintonServiceProtocol {
     private var currentUser: User?
+    private var userDirectory: [String: User] = [:]
+
     private var sessions: [Session] = []
     private var participantsBySessionID: [String: [SessionParticipant]] = [:]
+    private var adminsBySessionID: [String: [SessionAdmin]] = [:]
     private var paymentMethodsBySessionID: [String: [PaymentMethod]] = [:]
     private var paymentRecordsBySessionID: [String: [PaymentRecord]] = [:]
 
@@ -13,14 +16,16 @@ final class MockBadmintonService: BadmintonServiceProtocol {
 
     func wechatLogin(code: String) async throws -> AuthResponse {
         let trimmed = code.trimmingCharacters(in: .whitespacesAndNewlines)
+        let userID = trimmed.isEmpty ? "user_me" : "user_\(trimmed.lowercased())"
         let user = User(
-            id: "user_me",
+            id: userID,
             nickname: trimmed.isEmpty ? "Demo Player" : "Demo \(trimmed)",
             avatarURL: nil,
-            wechatOpenID: "mock_openid",
-            wechatUnionID: "mock_unionid"
+            wechatOpenID: "mock_openid_\(userID)",
+            wechatUnionID: "mock_unionid_\(userID)"
         )
         currentUser = user
+        userDirectory[user.id] = user
         return AuthResponse(token: "mock_token_123", user: user)
     }
 
@@ -29,8 +34,10 @@ final class MockBadmintonService: BadmintonServiceProtocol {
     }
 
     func createSession(_ request: CreateSessionRequest) async throws -> Session {
+        let initiator = ensureCurrentUser()
+        let sessionID = UUID().uuidString
         let session = Session(
-            id: UUID().uuidString,
+            id: sessionID,
             title: request.title,
             startsAt: request.startsAt,
             endsAt: request.endsAt,
@@ -40,10 +47,20 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             withdrawDeadline: request.withdrawDeadline,
             finalizeAt: nil,
             status: .open,
-            feeRule: request.feeRule
+            feeRule: request.feeRule,
+            initiatorUser: initiator,
+            adminUserIDs: [initiator.id]
         )
         sessions.append(session)
         participantsBySessionID[session.id] = []
+        adminsBySessionID[session.id] = [
+            SessionAdmin(
+                id: UUID().uuidString,
+                userID: initiator.id,
+                nickname: initiator.nickname,
+                addedAt: Date()
+            )
+        ]
         paymentMethodsBySessionID[session.id] = []
         paymentRecordsBySessionID[session.id] = []
         return session
@@ -54,6 +71,7 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             throw APIError.httpError(statusCode: 404, message: "Session not found")
         }
         let participants = participantsBySessionID[sessionID] ?? []
+        let admins = adminsBySessionID[sessionID] ?? []
         return SessionDetail(
             id: session.id,
             title: session.title,
@@ -66,13 +84,19 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             finalizeAt: session.finalizeAt,
             status: session.status,
             feeRule: session.feeRule,
+            initiatorUser: session.initiatorUser,
+            admins: admins,
             participants: participants.sorted { $0.queuePosition < $1.queuePosition }
         )
     }
 
     func finalizeSession(sessionID: String) async throws -> Session {
+        let user = ensureCurrentUser()
         guard let index = sessions.firstIndex(where: { $0.id == sessionID }) else {
             throw APIError.httpError(statusCode: 404, message: "Session not found")
+        }
+        guard isAdmin(userID: user.id, sessionID: sessionID) else {
+            throw APIError.httpError(statusCode: 403, message: "Only session admins can finalize.")
         }
         let old = sessions[index]
         let updated = Session(
@@ -86,7 +110,9 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             withdrawDeadline: old.withdrawDeadline,
             finalizeAt: Date(),
             status: .locked,
-            feeRule: old.feeRule
+            feeRule: old.feeRule,
+            initiatorUser: old.initiatorUser,
+            adminUserIDs: old.adminUserIDs
         )
         sessions[index] = updated
         return updated
@@ -165,7 +191,61 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         )
     }
 
+    func listSessionAdmins(sessionID: String) async throws -> [SessionAdmin] {
+        adminsBySessionID[sessionID] ?? []
+    }
+
+    func addSessionAdmin(sessionID: String, request: AddSessionAdminRequest) async throws -> SessionAdmin {
+        let actor = ensureCurrentUser()
+        guard isAdmin(userID: actor.id, sessionID: sessionID) else {
+            throw APIError.httpError(statusCode: 403, message: "Only session admins can add admins.")
+        }
+
+        guard let sessionIndex = sessions.firstIndex(where: { $0.id == sessionID }) else {
+            throw APIError.httpError(statusCode: 404, message: "Session not found")
+        }
+
+        var admins = adminsBySessionID[sessionID] ?? []
+        if let existing = admins.first(where: { $0.userID == request.userID }) {
+            return existing
+        }
+
+        let targetUser = ensureUserExists(userID: request.userID, nickname: request.nickname)
+        let admin = SessionAdmin(
+            id: UUID().uuidString,
+            userID: targetUser.id,
+            nickname: targetUser.nickname,
+            addedAt: Date()
+        )
+        admins.append(admin)
+        adminsBySessionID[sessionID] = admins
+
+        let old = sessions[sessionIndex]
+        sessions[sessionIndex] = Session(
+            id: old.id,
+            title: old.title,
+            startsAt: old.startsAt,
+            endsAt: old.endsAt,
+            location: old.location,
+            courtCount: old.courtCount,
+            maxParticipants: old.maxParticipants,
+            withdrawDeadline: old.withdrawDeadline,
+            finalizeAt: old.finalizeAt,
+            status: old.status,
+            feeRule: old.feeRule,
+            initiatorUser: old.initiatorUser,
+            adminUserIDs: admins.map(\.userID)
+        )
+
+        return admin
+    }
+
     func updateParticipant(sessionID: String, participantID: String, request: UpdateParticipantRequest) async throws -> SessionParticipant {
+        let actor = ensureCurrentUser()
+        guard isAdmin(userID: actor.id, sessionID: sessionID) else {
+            throw APIError.httpError(statusCode: 403, message: "Only session admins can update participant metadata.")
+        }
+
         guard var participants = participantsBySessionID[sessionID] else {
             throw APIError.httpError(statusCode: 404, message: "No participants")
         }
@@ -253,6 +333,25 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         return created
     }
 
+    private func isAdmin(userID: String, sessionID: String) -> Bool {
+        adminsBySessionID[sessionID]?.contains(where: { $0.userID == userID }) ?? false
+    }
+
+    private func ensureUserExists(userID: String, nickname: String?) -> User {
+        if let existing = userDirectory[userID] {
+            return existing
+        }
+        let created = User(
+            id: userID,
+            nickname: nickname ?? "Member \(userID)",
+            avatarURL: nil,
+            wechatOpenID: nil,
+            wechatUnionID: nil
+        )
+        userDirectory[userID] = created
+        return created
+    }
+
     private func ensureCurrentUser() -> User {
         if let currentUser { return currentUser }
         let fallback = User(
@@ -263,12 +362,18 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             wechatUnionID: "mock_unionid"
         )
         currentUser = fallback
+        userDirectory[fallback.id] = fallback
         return fallback
     }
 
     private func seedData() {
         let now = Date()
         let fee = FeeRule(mode: .fixedPerPerson, amount: 20, lateWithdrawRatio: 1)
+
+        let alice = User(id: "user_alice", nickname: "Alice", avatarURL: nil, wechatOpenID: nil, wechatUnionID: nil)
+        let bob = User(id: "user_bob", nickname: "Bob", avatarURL: nil, wechatOpenID: nil, wechatUnionID: nil)
+        userDirectory[alice.id] = alice
+        userDirectory[bob.id] = bob
 
         let s1 = Session(
             id: "session_seed_1",
@@ -281,7 +386,9 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             withdrawDeadline: now.addingTimeInterval(60 * 60 * 12),
             finalizeAt: nil,
             status: .open,
-            feeRule: fee
+            feeRule: fee,
+            initiatorUser: alice,
+            adminUserIDs: [alice.id]
         )
         let s2 = Session(
             id: "session_seed_2",
@@ -294,9 +401,14 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             withdrawDeadline: now.addingTimeInterval(60 * 60 * 20),
             finalizeAt: nil,
             status: .open,
-            feeRule: fee
+            feeRule: fee,
+            initiatorUser: bob,
+            adminUserIDs: [bob.id]
         )
         sessions = [s1, s2]
+        adminsBySessionID[s1.id] = [SessionAdmin(id: UUID().uuidString, userID: alice.id, nickname: alice.nickname, addedAt: now)]
+        adminsBySessionID[s2.id] = [SessionAdmin(id: UUID().uuidString, userID: bob.id, nickname: bob.nickname, addedAt: now)]
+
         participantsBySessionID[s1.id] = []
         participantsBySessionID[s2.id] = []
         paymentMethodsBySessionID[s1.id] = []

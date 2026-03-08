@@ -19,6 +19,33 @@ struct SessionDetailView: View {
                             .font(.footnote)
                         Text("Withdraw deadline: \(detail.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
                             .font(.footnote)
+                        Text("Initiator: \(detail.initiatorUser.nickname)")
+                            .font(.footnote)
+                    }
+
+                    Section("Admins") {
+                        ForEach(detail.admins) { admin in
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(admin.nickname)
+                                    .font(.subheadline.weight(.semibold))
+                                Text(admin.userID)
+                                    .font(.footnote)
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+
+                        if viewModel.isCurrentUserAdmin {
+                            TextField("New admin user ID", text: $viewModel.newAdminUserID)
+                                .textInputAutocapitalization(.never)
+                                .autocorrectionDisabled(true)
+                            TextField("Nickname (optional)", text: $viewModel.newAdminNickname)
+                            Button("Add Admin") {
+                                Task { await viewModel.addAdmin() }
+                            }
+                        } else {
+                            Text("Only session admins can add admins.")
+                                .foregroundStyle(.secondary)
+                        }
                     }
 
                     Section("Actions") {
@@ -29,6 +56,7 @@ struct SessionDetailView: View {
                                 .buttonStyle(.bordered)
                             Button("Finalize") { Task { await viewModel.finalize() } }
                                 .buttonStyle(.bordered)
+                                .disabled(!viewModel.isCurrentUserAdmin)
                         }
                     }
 
@@ -45,6 +73,7 @@ struct SessionDetailView: View {
                                         .font(.footnote)
                                         .foregroundStyle(.secondary)
                                     Button {
+                                        guard viewModel.isCurrentUserAdmin else { return }
                                         Task {
                                             await viewModel.updateStayedLate(
                                                 participantID: participant.id,
@@ -59,6 +88,7 @@ struct SessionDetailView: View {
                                         .font(.footnote)
                                     }
                                     .buttonStyle(.plain)
+                                    .disabled(!viewModel.isCurrentUserAdmin)
                                 }
                                 .padding(.vertical, 2)
                             }
