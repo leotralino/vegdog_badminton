@@ -11,4 +11,4 @@ if ! command -v xcodegen >/dev/null 2>&1; then
 fi
 
 xcodegen generate --spec project.yml
-echo "Generated: $ROOT_DIR/BadmintonFriends.xcodeproj"
+echo "Generated: $ROOT_DIR/VegDog.xcodeproj"

@@ -17,7 +17,7 @@ final class AuthViewModel: ObservableObject {
     func login() async {
         let code = wechatCode.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !code.isEmpty else {
-            errorMessage = "Please input WeChat auth code."
+            errorMessage = String(localized: "error.wechat_code_required")
             return
         }
 

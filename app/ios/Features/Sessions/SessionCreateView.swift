@@ -8,33 +8,33 @@ struct SessionCreateView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Basic") {
-                    TextField("Title", text: $viewModel.title)
-                    TextField("Location", text: $viewModel.location)
+                Section("sessions.create.basic") {
+                    TextField(String(localized: "sessions.create.title_placeholder"), text: $viewModel.title)
+                    TextField(String(localized: "sessions.create.location_placeholder"), text: $viewModel.location)
                 }
 
-                Section("Schedule") {
-                    DatePicker("Starts At", selection: $viewModel.startsAt)
-                    DatePicker("Withdraw Deadline", selection: $viewModel.withdrawDeadline)
+                Section("sessions.create.schedule") {
+                    DatePicker("sessions.create.starts_at", selection: $viewModel.startsAt)
+                    DatePicker("sessions.create.withdraw_deadline", selection: $viewModel.withdrawDeadline)
                 }
 
-                Section("Capacity") {
-                    TextField("Court Count", text: $viewModel.courtCount)
+                Section("sessions.create.capacity") {
+                    TextField(String(localized: "sessions.create.court_count"), text: $viewModel.courtCount)
                         .keyboardType(.numberPad)
-                    TextField("Max Participants", text: $viewModel.maxParticipants)
+                    TextField(String(localized: "sessions.create.max_participants"), text: $viewModel.maxParticipants)
                         .keyboardType(.numberPad)
                 }
 
-                Section("Fee Rule") {
-                    Picker("Mode", selection: $viewModel.feeMode) {
-                        Text("Fixed Per Person").tag(FeeMode.fixedPerPerson)
-                        Text("Split By Attendance").tag(FeeMode.splitByAttendance)
+                Section("sessions.create.fee_rule") {
+                    Picker("sessions.create.mode", selection: $viewModel.feeMode) {
+                        Text("sessions.create.fixed_per_person").tag(FeeMode.fixedPerPerson)
+                        Text("sessions.create.split_by_attendance").tag(FeeMode.splitByAttendance)
                     }
                     if viewModel.feeMode == .fixedPerPerson {
-                        TextField("Amount (USD)", text: $viewModel.fixedAmount)
+                        TextField(String(localized: "sessions.create.amount_usd"), text: $viewModel.fixedAmount)
                             .keyboardType(.decimalPad)
                     }
-                    TextField("Late Withdraw Ratio (0~1)", text: $viewModel.lateWithdrawRatio)
+                    TextField(String(localized: "sessions.create.late_ratio"), text: $viewModel.lateWithdrawRatio)
                         .keyboardType(.decimalPad)
                 }
 
@@ -45,10 +45,13 @@ struct SessionCreateView: View {
                     }
                 }
             }
-            .navigationTitle("Create Session")
+            .navigationTitle("sessions.create.title")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel", action: onCancel)
+                    Button("common.cancel", action: onCancel)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    LanguageToggleButton()
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -61,7 +64,7 @@ struct SessionCreateView: View {
                         if viewModel.isSaving {
                             ProgressView()
                         } else {
-                            Text("Create")
+                            Text("sessions.create.submit")
                         }
                     }
                     .disabled(viewModel.isSaving)

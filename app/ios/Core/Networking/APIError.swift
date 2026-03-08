@@ -11,17 +11,17 @@ enum APIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Invalid API URL."
+            return String(localized: "error.invalid_api_url")
         case .invalidResponse:
-            return "Invalid server response."
+            return String(localized: "error.invalid_server_response")
         case .httpError(let statusCode, let message):
-            return "HTTP \(statusCode): \(message ?? "Request failed.")"
+            return "HTTP \(statusCode): \(message ?? String(localized: "error.request_failed"))"
         case .decodingError(let error):
-            return "Decode error: \(error.localizedDescription)"
+            return "\(String(localized: "error.decode_error")): \(error.localizedDescription)"
         case .encodingError(let error):
-            return "Encode error: \(error.localizedDescription)"
+            return "\(String(localized: "error.encode_error")): \(error.localizedDescription)"
         case .networkError(let error):
-            return "Network error: \(error.localizedDescription)"
+            return "\(String(localized: "error.network_error")): \(error.localizedDescription)"
         }
     }
 }

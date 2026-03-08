@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct BadmintonFriendsApp: App {
+struct VegDogApp: App {
     var body: some Scene {
         WindowGroup {
             AppRootView()

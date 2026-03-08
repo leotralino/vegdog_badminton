@@ -4,6 +4,7 @@
 - Finalize `docs/SPECS.md` open questions.
 - Create Xcode project and CI baseline.
 - Define backend choice (BaaS vs custom API).
+- Implement bilingual UI baseline (English + Simplified Chinese) with runtime switch.
 
 ## Phase 1: MVP
 - WeChat login.

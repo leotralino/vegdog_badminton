@@ -16,7 +16,7 @@ This folder contains starter structure for the iOS app.
 - `Core`: shared models, networking, utilities
 
 ## Next Step
-Create Xcode project named `BadmintonFriends` and map source groups to this folder layout.
+Create Xcode project named `VegDog` and map source groups to this folder layout.
 
 ## Implemented Core Scaffold
 - `Core/Models/APIModels.swift`: Codable models aligned with `backend/openapi/openapi.yaml`
@@ -26,7 +26,7 @@ Create Xcode project named `BadmintonFriends` and map source groups to this fold
 - `Core/Utils/AppEnvironment.swift`: API base URL config (`API_BASE_URL` override)
 
 ## Implemented Feature Scaffold
-- `App/BadmintonFriendsApp.swift`: SwiftUI app entry
+- `App/VegDogApp.swift`: SwiftUI app entry
 - `App/AppRootView.swift`: auth-gated root routing + tab shell
 - `App/AppState.swift`: in-memory auth/session state
 - `Features/Auth/AuthViewModel.swift` + `Features/Auth/AuthView.swift`: login UI with WeChat code input
@@ -34,6 +34,17 @@ Create Xcode project named `BadmintonFriends` and map source groups to this fold
 - `Features/Sessions/SessionCreateViewModel.swift` + `Features/Sessions/SessionCreateView.swift`: admin create-session form
 - `Features/Sessions/SessionDetailViewModel.swift` + `Features/Sessions/SessionDetailView.swift`: session detail + initiator/admin display + add-admin + participant `stayed_late` admin update
 - `Features/Payments/PaymentsViewModel.swift` + `Features/Payments/PaymentsView.swift`: payment methods + records management UI by session ID
+
+## Branding & Localization
+- App name:
+  - English: `VegDog` (`Vegetable Dog`)
+  - Chinese: `菜狗`
+- Localized resources:
+  - `Resources/en.lproj/Localizable.strings`
+  - `Resources/zh-Hans.lproj/Localizable.strings`
+  - `Resources/en.lproj/InfoPlist.strings`
+  - `Resources/zh-Hans.lproj/InfoPlist.strings`
+- Logo asset (vector): `Resources/Brand/vegdog_logo.svg`
 
 ## Xcode Project Generation
 This repo uses XcodeGen so project files stay reproducible.
@@ -54,7 +65,7 @@ Run from repo root:
 ```
 
 This creates:
-- `app/ios/BadmintonFriends.xcodeproj`
+- `app/ios/VegDog.xcodeproj`
 
 ### Open in Xcode
 

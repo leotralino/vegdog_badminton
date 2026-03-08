@@ -1,4 +1,4 @@
-name: BadmintonFriends
+name: VegDog
 options:
   bundleIdPrefix: com.vegdog
   deploymentTarget:
@@ -6,13 +6,13 @@ options:
   createIntermediateGroups: true
 settings:
   base:
-    PRODUCT_NAME: BadmintonFriends
+    PRODUCT_NAME: VegDog
     SWIFT_VERSION: 5.10
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: 0.1.0
     DEVELOPMENT_TEAM: ""
 targets:
-  BadmintonFriends:
+  VegDog:
     type: application
     platform: iOS
     sources:
@@ -24,8 +24,8 @@ targets:
     info:
       path: Resources/Info.plist
       properties:
-        CFBundleDisplayName: BadmintonFriends
-        CFBundleName: BadmintonFriends
+        CFBundleDisplayName: VegDog
+        CFBundleName: VegDog
         UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
@@ -35,7 +35,8 @@ targets:
           - UIInterfaceOrientationLandscapeRight
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.vegdog.badmintonfriends
+        PRODUCT_NAME: VegDog
+        PRODUCT_BUNDLE_IDENTIFIER: com.vegdog.vegdog
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: true
         CODE_SIGN_STYLE: Automatic
     scheme:

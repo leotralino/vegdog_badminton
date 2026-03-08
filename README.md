@@ -1,6 +1,6 @@
 # vegdog_badminton
 
-Badminton friends iOS app scaffold.
+VegDog / 菜狗 badminton friends iOS app scaffold.
 
 ## Goals
 - WeChat login

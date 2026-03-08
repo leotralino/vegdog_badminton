@@ -6,8 +6,8 @@ struct PaymentsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Session") {
-                    TextField("Session ID", text: $viewModel.sessionID)
+                Section("payments.section_session") {
+                    TextField(String(localized: "payments.session_id"), text: $viewModel.sessionID)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
 
@@ -18,7 +18,7 @@ struct PaymentsView: View {
                             ProgressView()
                                 .frame(maxWidth: .infinity)
                         } else {
-                            Text("Load Payments")
+                            Text("payments.load")
                                 .frame(maxWidth: .infinity)
                         }
                     }
@@ -26,46 +26,46 @@ struct PaymentsView: View {
                     .disabled(viewModel.isLoading)
                 }
 
-                Section("Add Payment Method") {
-                    Picker("Type", selection: $viewModel.newMethodType) {
-                        Text("Venmo").tag(PaymentMethodType.venmo)
-                        Text("Zelle").tag(PaymentMethodType.zelle)
-                        Text("Other").tag(PaymentMethodType.other)
+                Section("payments.section_add_method") {
+                    Picker("payments.method_type", selection: $viewModel.newMethodType) {
+                        Text("payments.type_venmo").tag(PaymentMethodType.venmo)
+                        Text("payments.type_zelle").tag(PaymentMethodType.zelle)
+                        Text("payments.type_other").tag(PaymentMethodType.other)
                     }
-                    TextField("Label (e.g. Kevin Venmo)", text: $viewModel.newMethodLabel)
-                    TextField("Account Ref (e.g. @kevin)", text: $viewModel.newMethodAccountRef)
-                    TextField("Deep Link (optional)", text: $viewModel.newMethodDeepLink)
+                    TextField(String(localized: "payments.method_label"), text: $viewModel.newMethodLabel)
+                    TextField(String(localized: "payments.method_account_ref"), text: $viewModel.newMethodAccountRef)
+                    TextField(String(localized: "payments.method_deep_link"), text: $viewModel.newMethodDeepLink)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
 
-                    Button("Save Method") {
+                    Button("payments.save_method") {
                         Task { await viewModel.addPaymentMethod() }
                     }
                 }
 
-                Section("Upsert Payment Record") {
-                    TextField("Participant ID", text: $viewModel.recordParticipantID)
+                Section("payments.section_upsert_record") {
+                    TextField(String(localized: "payments.participant_id"), text: $viewModel.recordParticipantID)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled(true)
-                    TextField("Base Fee", text: $viewModel.recordBaseFeeAmount)
+                    TextField(String(localized: "payments.base_fee"), text: $viewModel.recordBaseFeeAmount)
                         .keyboardType(.decimalPad)
-                    TextField("Late Usage Fee (optional)", text: $viewModel.recordLateUsageFeeAmount)
+                    TextField(String(localized: "payments.late_fee"), text: $viewModel.recordLateUsageFeeAmount)
                         .keyboardType(.decimalPad)
-                    Picker("Status", selection: $viewModel.recordStatus) {
-                        Text("Unpaid").tag(PaymentStatus.unpaid)
-                        Text("Paid").tag(PaymentStatus.paid)
-                        Text("Waived").tag(PaymentStatus.waived)
+                    Picker("payments.status", selection: $viewModel.recordStatus) {
+                        Text("payments.status_unpaid").tag(PaymentStatus.unpaid)
+                        Text("payments.status_paid").tag(PaymentStatus.paid)
+                        Text("payments.status_waived").tag(PaymentStatus.waived)
                     }
-                    TextField("Note (optional)", text: $viewModel.recordNote)
+                    TextField(String(localized: "payments.note"), text: $viewModel.recordNote)
 
-                    Button("Save Record") {
+                    Button("payments.save_record") {
                         Task { await viewModel.upsertPaymentRecord() }
                     }
                 }
 
-                Section("Methods") {
+                Section("payments.section_methods") {
                     if viewModel.paymentMethods.isEmpty {
-                        Text("No payment methods")
+                        Text("payments.no_methods")
                             .foregroundStyle(.secondary)
                     } else {
                         ForEach(viewModel.paymentMethods) { method in
@@ -86,22 +86,22 @@ struct PaymentsView: View {
                     }
                 }
 
-                Section("Records") {
+                Section("payments.section_records") {
                     if viewModel.paymentRecords.isEmpty {
-                        Text("No payment records")
+                        Text("payments.no_records")
                             .foregroundStyle(.secondary)
                     } else {
                         ForEach(viewModel.paymentRecords) { record in
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Participant: \(record.participantID)")
+                                Text("\(String(localized: "payments.participant")): \(record.participantID)")
                                     .font(.subheadline.weight(.semibold))
-                                Text("Status: \(record.status.rawValue)")
+                                Text("\(String(localized: "payments.status")): \(record.status.rawValue)")
                                     .font(.footnote)
                                     .foregroundStyle(.secondary)
-                                Text("Base: \(record.baseFeeAmount.formatted(.currency(code: "USD"))), Late: \(record.lateUsageFeeAmount.formatted(.currency(code: "USD")))")
+                                Text("\(String(localized: "payments.base")): \(record.baseFeeAmount.formatted(.currency(code: "USD"))), \(String(localized: "payments.late")): \(record.lateUsageFeeAmount.formatted(.currency(code: "USD")))")
                                     .font(.footnote)
                                     .foregroundStyle(.secondary)
-                                Text("Total: \(record.totalAmount.formatted(.currency(code: "USD")))")
+                                Text("\(String(localized: "payments.total")): \(record.totalAmount.formatted(.currency(code: "USD")))")
                                     .font(.footnote)
                             }
                             .padding(.vertical, 2)
@@ -109,18 +109,23 @@ struct PaymentsView: View {
                     }
                 }
             }
-            .navigationTitle("Payments")
+            .navigationTitle("payments.title")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    LanguageToggleButton()
+                }
+            }
             .alert(
-                "Error",
+                String(localized: "common.error_title"),
                 isPresented: Binding(
                     get: { viewModel.errorMessage != nil },
                     set: { _ in viewModel.errorMessage = nil }
                 ),
                 actions: {
-                    Button("OK", role: .cancel) {}
+                    Button(String(localized: "common.ok"), role: .cancel) {}
                 },
                 message: {
-                    Text(viewModel.errorMessage ?? "Unknown error")
+                    Text(viewModel.errorMessage ?? String(localized: "common.unknown_error"))
                 }
             )
         }

@@ -12,9 +12,9 @@ struct SessionListView: View {
         NavigationStack {
             Group {
                 if viewModel.isLoading && viewModel.sessions.isEmpty {
-                    ProgressView("Loading sessions...")
+                    ProgressView("sessions.loading")
                 } else if viewModel.sessions.isEmpty {
-                    ContentUnavailableView("No sessions", systemImage: "calendar")
+                    ContentUnavailableView("sessions.empty_title", systemImage: "calendar")
                 } else {
                     List(viewModel.sessions) { session in
                         SessionRowView(
@@ -28,13 +28,14 @@ struct SessionListView: View {
                     .listStyle(.plain)
                 }
             }
-            .navigationTitle("Sessions")
+            .navigationTitle("sessions.title")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("Sign Out", action: onSignOut)
+                    Button("common.sign_out", action: onSignOut)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack {
+                        LanguageToggleButton()
                         Button {
                             isPresentingCreate = true
                         } label: {
@@ -54,16 +55,16 @@ struct SessionListView: View {
                 }
             }
             .alert(
-                "Error",
+                String(localized: "common.error_title"),
                 isPresented: Binding(
                     get: { viewModel.errorMessage != nil },
                     set: { _ in viewModel.errorMessage = nil }
                 ),
                 actions: {
-                    Button("OK", role: .cancel) {}
+                    Button(String(localized: "common.ok"), role: .cancel) {}
                 },
                 message: {
-                    Text(viewModel.errorMessage ?? "Unknown error")
+                    Text(viewModel.errorMessage ?? String(localized: "common.unknown_error"))
                 }
             )
             .sheet(isPresented: $isPresentingCreate) {
@@ -110,25 +111,25 @@ private struct SessionRowView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
-            Text("Courts: \(session.courtCount)  Max: \(session.maxParticipants)")
+            Text("\(String(localized: "sessions.courts")): \(session.courtCount)  \(String(localized: "sessions.max")): \(session.maxParticipants)")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-            Text("Initiator: \(session.initiatorUser.nickname)")
+            Text("\(String(localized: "sessions.initiator")): \(session.initiatorUser.nickname)")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
 
-            Text("Withdraw by: \(session.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
+            Text("\(String(localized: "sessions.withdraw_by")): \(session.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
 
             HStack {
-                Button("Details", action: onOpenDetail)
+                Button("sessions.details", action: onOpenDetail)
                     .buttonStyle(.bordered)
-                Button("Join", action: onJoin)
+                Button("sessions.join", action: onJoin)
                     .buttonStyle(.borderedProminent)
-                Button("Withdraw", action: onWithdraw)
+                Button("sessions.withdraw", action: onWithdraw)
                     .buttonStyle(.bordered)
-                Button("Finalize", action: onFinalize)
+                Button("sessions.finalize", action: onFinalize)
                     .buttonStyle(.bordered)
             }
             .font(.footnote)

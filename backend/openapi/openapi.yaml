@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Badminton Friends API
+  title: VegDog API
   version: 0.1.0
   description: >
     API contract for badminton session management, queue (接龙), payment tracking,

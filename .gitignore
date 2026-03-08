@@ -208,3 +208,7 @@ __marimo__/
 
 # macOS Finder
 .DS_Store
+
+# Xcode user-specific files
+*.xcuserstate
+xcuserdata/

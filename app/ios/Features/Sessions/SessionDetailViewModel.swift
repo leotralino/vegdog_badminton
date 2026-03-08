@@ -75,7 +75,7 @@ final class SessionDetailViewModel: ObservableObject {
     func addAdmin() async {
         let userID = newAdminUserID.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !userID.isEmpty else {
-            errorMessage = "Admin user ID is required."
+            errorMessage = String(localized: "error.admin_user_id_required")
             return
         }
         do {

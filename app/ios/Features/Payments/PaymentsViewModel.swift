@@ -28,7 +28,7 @@ final class PaymentsViewModel: ObservableObject {
     func loadSessionPayments() async {
         let id = sanitizedSessionID()
         guard !id.isEmpty else {
-            errorMessage = "Session ID is required."
+            errorMessage = String(localized: "error.session_id_required")
             return
         }
 
@@ -49,15 +49,15 @@ final class PaymentsViewModel: ObservableObject {
     func addPaymentMethod() async {
         let id = sanitizedSessionID()
         guard !id.isEmpty else {
-            errorMessage = "Session ID is required."
+            errorMessage = String(localized: "error.session_id_required")
             return
         }
         guard !newMethodLabel.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            errorMessage = "Method label is required."
+            errorMessage = String(localized: "error.method_label_required")
             return
         }
         guard !newMethodAccountRef.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            errorMessage = "Account reference is required."
+            errorMessage = String(localized: "error.account_ref_required")
             return
         }
 
@@ -80,16 +80,16 @@ final class PaymentsViewModel: ObservableObject {
     func upsertPaymentRecord() async {
         let id = sanitizedSessionID()
         guard !id.isEmpty else {
-            errorMessage = "Session ID is required."
+            errorMessage = String(localized: "error.session_id_required")
             return
         }
         let participantID = recordParticipantID.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !participantID.isEmpty else {
-            errorMessage = "Participant ID is required."
+            errorMessage = String(localized: "error.participant_id_required")
             return
         }
         guard let baseFee = Double(recordBaseFeeAmount) else {
-            errorMessage = "Base fee must be a number."
+            errorMessage = String(localized: "error.base_fee_invalid")
             return
         }
 

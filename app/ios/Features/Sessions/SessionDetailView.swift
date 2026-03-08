@@ -6,24 +6,24 @@ struct SessionDetailView: View {
     var body: some View {
         Group {
             if viewModel.isLoading && viewModel.detail == nil {
-                ProgressView("Loading session...")
+                ProgressView("sessions.detail.loading")
             } else if let detail = viewModel.detail {
                 List {
-                    Section("Session") {
+                    Section("sessions.detail.section_session") {
                         Text(detail.title)
                             .font(.headline)
                         Text("\(detail.location) · \(detail.startsAt.formatted(date: .abbreviated, time: .shortened))")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
-                        Text("Status: \(detail.status.rawValue)")
+                        Text("\(String(localized: "sessions.detail.status")): \(detail.status.rawValue)")
                             .font(.footnote)
-                        Text("Withdraw deadline: \(detail.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
+                        Text("\(String(localized: "sessions.detail.withdraw_deadline")): \(detail.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
                             .font(.footnote)
-                        Text("Initiator: \(detail.initiatorUser.nickname)")
+                        Text("\(String(localized: "sessions.detail.initiator")): \(detail.initiatorUser.nickname)")
                             .font(.footnote)
                     }
 
-                    Section("Admins") {
+                    Section("sessions.detail.section_admins") {
                         ForEach(detail.admins) { admin in
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(admin.nickname)
@@ -35,41 +35,41 @@ struct SessionDetailView: View {
                         }
 
                         if viewModel.isCurrentUserAdmin {
-                            TextField("New admin user ID", text: $viewModel.newAdminUserID)
+                            TextField(String(localized: "sessions.detail.new_admin_user_id"), text: $viewModel.newAdminUserID)
                                 .textInputAutocapitalization(.never)
                                 .autocorrectionDisabled(true)
-                            TextField("Nickname (optional)", text: $viewModel.newAdminNickname)
-                            Button("Add Admin") {
+                            TextField(String(localized: "sessions.detail.new_admin_nickname"), text: $viewModel.newAdminNickname)
+                            Button("sessions.detail.add_admin") {
                                 Task { await viewModel.addAdmin() }
                             }
                         } else {
-                            Text("Only session admins can add admins.")
+                            Text("sessions.detail.only_admin_add")
                                 .foregroundStyle(.secondary)
                         }
                     }
 
-                    Section("Actions") {
+                    Section("sessions.detail.section_actions") {
                         HStack {
-                            Button("Join") { Task { await viewModel.join() } }
+                            Button("sessions.join") { Task { await viewModel.join() } }
                                 .buttonStyle(.borderedProminent)
-                            Button("Withdraw") { Task { await viewModel.withdraw() } }
+                            Button("sessions.withdraw") { Task { await viewModel.withdraw() } }
                                 .buttonStyle(.bordered)
-                            Button("Finalize") { Task { await viewModel.finalize() } }
+                            Button("sessions.finalize") { Task { await viewModel.finalize() } }
                                 .buttonStyle(.bordered)
                                 .disabled(!viewModel.isCurrentUserAdmin)
                         }
                     }
 
-                    Section("Participants") {
+                    Section("sessions.detail.section_participants") {
                         if detail.participants.isEmpty {
-                            Text("No participants")
+                            Text("sessions.detail.no_participants")
                                 .foregroundStyle(.secondary)
                         } else {
                             ForEach(detail.participants) { participant in
                                 VStack(alignment: .leading, spacing: 6) {
                                     Text(participant.user.nickname)
                                         .font(.subheadline.weight(.semibold))
-                                    Text("Status: \(participant.status.rawValue) · Queue #\(participant.queuePosition)")
+                                    Text("\(String(localized: "sessions.detail.participant_status")): \(participant.status.rawValue) · #\(participant.queuePosition)")
                                         .font(.footnote)
                                         .foregroundStyle(.secondary)
                                     Button {
@@ -82,7 +82,9 @@ struct SessionDetailView: View {
                                         }
                                     } label: {
                                         Label(
-                                            participant.stayedLate ? "Stayed Late: Yes" : "Stayed Late: No",
+                                            participant.stayedLate
+                                                ? String(localized: "sessions.detail.stayed_late_yes")
+                                                : String(localized: "sessions.detail.stayed_late_no"),
                                             systemImage: participant.stayedLate ? "checkmark.circle.fill" : "circle"
                                         )
                                         .font(.footnote)
@@ -96,27 +98,32 @@ struct SessionDetailView: View {
                     }
                 }
             } else {
-                ContentUnavailableView("Session unavailable", systemImage: "exclamationmark.triangle")
+                ContentUnavailableView("sessions.detail.unavailable", systemImage: "exclamationmark.triangle")
             }
         }
-        .navigationTitle("Session Detail")
+        .navigationTitle("sessions.detail.title")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                LanguageToggleButton()
+            }
+        }
         .task {
             if viewModel.detail == nil {
                 await viewModel.load()
             }
         }
         .alert(
-            "Error",
+            String(localized: "common.error_title"),
             isPresented: Binding(
                 get: { viewModel.errorMessage != nil },
                 set: { _ in viewModel.errorMessage = nil }
             ),
             actions: {
-                Button("OK", role: .cancel) {}
+                Button(String(localized: "common.ok"), role: .cancel) {}
             },
             message: {
-                Text(viewModel.errorMessage ?? "Unknown error")
+                Text(viewModel.errorMessage ?? String(localized: "common.unknown_error"))
             }
         )
     }

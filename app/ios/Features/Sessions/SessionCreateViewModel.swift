@@ -26,35 +26,35 @@ final class SessionCreateViewModel: ObservableObject {
         let trimmedLocation = location.trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !trimmedTitle.isEmpty else {
-            errorMessage = "Title is required."
+            errorMessage = String(localized: "error.title_required")
             return false
         }
         guard !trimmedLocation.isEmpty else {
-            errorMessage = "Location is required."
+            errorMessage = String(localized: "error.location_required")
             return false
         }
         guard let courtCount = Int(courtCount), courtCount > 0 else {
-            errorMessage = "Court count must be a positive integer."
+            errorMessage = String(localized: "error.court_count_invalid")
             return false
         }
         guard let maxParticipants = Int(maxParticipants), maxParticipants > 0 else {
-            errorMessage = "Max participants must be a positive integer."
+            errorMessage = String(localized: "error.max_participants_invalid")
             return false
         }
         guard withdrawDeadline <= startsAt else {
-            errorMessage = "Withdraw deadline should be before session start."
+            errorMessage = String(localized: "error.withdraw_deadline_invalid")
             return false
         }
 
         let parsedAmount = Double(fixedAmount)
         if feeMode == .fixedPerPerson && (parsedAmount == nil || parsedAmount! < 0) {
-            errorMessage = "Fixed amount must be a non-negative number."
+            errorMessage = String(localized: "error.fixed_amount_invalid")
             return false
         }
 
         let parsedRatio = Double(lateWithdrawRatio)
         if parsedRatio == nil || parsedRatio! < 0 || parsedRatio! > 1 {
-            errorMessage = "Late withdraw ratio must be between 0 and 1."
+            errorMessage = String(localized: "error.late_ratio_invalid")
             return false
         }
 

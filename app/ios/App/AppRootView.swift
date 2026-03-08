@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AppRootView: View {
     @StateObject private var appState = AppState()
+    @StateObject private var languageSettings = LanguageSettings()
     private let container: AppContainer
     @StateObject private var sessionsViewModel: SessionsViewModel
     @StateObject private var paymentsViewModel: PaymentsViewModel
@@ -23,12 +24,12 @@ struct AppRootView: View {
                         onSignOut: signOut
                     )
                     .tabItem {
-                        Label("Sessions", systemImage: "calendar")
+                        Label("sessions.title", systemImage: "calendar")
                     }
 
                     PaymentsView(viewModel: paymentsViewModel)
                         .tabItem {
-                            Label("Payments", systemImage: "creditcard")
+                            Label("payments.title", systemImage: "creditcard")
                         }
                 }
             } else {
@@ -37,6 +38,8 @@ struct AppRootView: View {
                 )
             }
         }
+        .environmentObject(languageSettings)
+        .environment(\.locale, languageSettings.locale)
     }
 
     private func signOut() {

@@ -1,5 +1,9 @@
 # SPECS.md
 
+App Name:
+- English: VegDog (Vegetable Dog)
+- Chinese: 菜狗
+
 ## 1. Product Vision
 Build an iOS app for badminton friends to organize sessions with queue sign-up (接龙), payment collection, and optional match tracking.
 
@@ -13,6 +17,14 @@ Build an iOS app for badminton friends to organize sessions with queue sign-up (
 ### 3.1 Authentication
 - Login with WeChat.
 - Basic profile: nickname, avatar, WeChat OpenID/UnionID mapping.
+
+### 3.1.1 Localization
+- Supported languages (only):
+  - English
+  - Mandarin Chinese (Simplified)
+- App branding by locale:
+  - English: VegDog (Vegetable Dog)
+  - Chinese: 菜狗
 
 ### 3.2 Queue / 接龙
 - Any member creates a session with:
