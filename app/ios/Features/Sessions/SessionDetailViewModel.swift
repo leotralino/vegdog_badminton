@@ -1,60 +1,63 @@
 import SwiftUI
 
 @MainActor
-final class SessionsViewModel: ObservableObject {
-    @Published var sessions: [Session] = []
+final class SessionDetailViewModel: ObservableObject {
+    @Published var detail: SessionDetail?
     @Published var isLoading = false
     @Published var errorMessage: String?
 
+    let sessionID: String
     private let service: BadmintonServiceProtocol
 
-    init(service: BadmintonServiceProtocol) {
+    init(sessionID: String, service: BadmintonServiceProtocol) {
+        self.sessionID = sessionID
         self.service = service
     }
 
-    func loadSessions() async {
+    func load() async {
         isLoading = true
         errorMessage = nil
         defer { isLoading = false }
 
         do {
-            sessions = try await service.listSessions()
+            detail = try await service.getSessionDetail(sessionID: sessionID)
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
-    func join(sessionID: String) async {
+    func join() async {
         do {
             _ = try await service.joinSession(sessionID: sessionID)
-            await loadSessions()
+            await load()
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
-    func withdraw(sessionID: String) async {
+    func withdraw() async {
         do {
             _ = try await service.withdrawSession(sessionID: sessionID)
-            await loadSessions()
+            await load()
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
-    func finalize(sessionID: String) async {
+    func finalize() async {
         do {
             _ = try await service.finalizeSession(sessionID: sessionID)
-            await loadSessions()
+            await load()
         } catch {
             errorMessage = error.localizedDescription
         }
     }
 
-    func createSession(request: CreateSessionRequest) async {
+    func updateStayedLate(participantID: String, stayedLate: Bool) async {
         do {
-            _ = try await service.createSession(request)
-            await loadSessions()
+            let request = UpdateParticipantRequest(stayedLate: stayedLate, adminNote: nil)
+            _ = try await service.updateParticipant(sessionID: sessionID, participantID: participantID, request: request)
+            await load()
         } catch {
             errorMessage = error.localizedDescription
         }

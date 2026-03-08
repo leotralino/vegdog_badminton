@@ -30,7 +30,9 @@ Create Xcode project named `BadmintonFriends` and map source groups to this fold
 - `App/AppRootView.swift`: auth-gated root routing + tab shell
 - `App/AppState.swift`: in-memory auth/session state
 - `Features/Auth/AuthViewModel.swift` + `Features/Auth/AuthView.swift`: login UI with WeChat code input
-- `Features/Sessions/SessionsViewModel.swift` + `Features/Sessions/SessionListView.swift`: session list + join/withdraw/finalize actions
+- `Features/Sessions/SessionsViewModel.swift` + `Features/Sessions/SessionListView.swift`: session list + create/join/withdraw/finalize actions
+- `Features/Sessions/SessionCreateViewModel.swift` + `Features/Sessions/SessionCreateView.swift`: admin create-session form
+- `Features/Sessions/SessionDetailViewModel.swift` + `Features/Sessions/SessionDetailView.swift`: session detail + participant `stayed_late` admin update
 - `Features/Payments/PaymentsViewModel.swift` + `Features/Payments/PaymentsView.swift`: payment methods + records management UI by session ID
 
 ## Xcode Project Generation

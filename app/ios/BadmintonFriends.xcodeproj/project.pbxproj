@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05C869A48BB86F228091EE46 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4080945A9D430C3FF556023 /* AppState.swift */; };
+		16D6FDE7FD50DAB0EBA870B6 /* PaymentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36374294D7D747DF6115916 /* PaymentsViewModel.swift */; };
 		2DC1FA64F3779F0206BD7D91 /* SessionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902D85364EA60D7878D4ABD8 /* SessionsViewModel.swift */; };
 		2F6A8D822BF72323D1AD2A1C /* BadmintonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C16777E5A3FA0CFA95C79F6 /* BadmintonService.swift */; };
 		31144B66157328F0CBA72BBD /* BadmintonFriendsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4499730A01C937E8CDC021E7 /* BadmintonFriendsApp.swift */; };
@@ -20,6 +21,7 @@
 		C8203ACEAD9F529ECC205DBD /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0ED3D7EB79189E9B1458D9 /* AppEnvironment.swift */; };
 		C87C233D74D7AB5CE401A456 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4073DDC6E60667FCFF1CDF /* AuthView.swift */; };
 		CB4CB0AB0F3CDE2E727372D5 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D463144E39333DFA5E998F0E /* APIError.swift */; };
+		EEDE9DB954785504C0F6FF3B /* PaymentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B895E52C5C3B939C206F5301 /* PaymentsView.swift */; };
 		FBB0AB543354175108C10B08 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFDF0C1A433E97C3D52E2EA0 /* AppContainer.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,8 +38,10 @@
 		94421D31A0A18D4F357F3850 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		A106B40FE23C363EED8C32C8 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
 		A25D4798014938BFD26ADCEA /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
+		A36374294D7D747DF6115916 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
 		AB5C08B41760D3FD267D30DC /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		B0BA6BACB056F16AD5B8E4B5 /* BadmintonFriends.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BadmintonFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B895E52C5C3B939C206F5301 /* PaymentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsView.swift; sourceTree = "<group>"; };
 		D4080945A9D430C3FF556023 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		D463144E39333DFA5E998F0E /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		D491D6521E25C44A776290B6 /* .gitkeep */ = {isa = PBXFileReference; path = .gitkeep; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 			isa = PBXGroup;
 			children = (
 				F511136FD992BE267B48378E /* .gitkeep */,
+				B895E52C5C3B939C206F5301 /* PaymentsView.swift */,
+				A36374294D7D747DF6115916 /* PaymentsViewModel.swift */,
 			);
 			path = Payments;
 			sourceTree = "<group>";
@@ -238,6 +244,8 @@
 				47603D442544D1F00B46CB18 /* AuthViewModel.swift in Sources */,
 				31144B66157328F0CBA72BBD /* BadmintonFriendsApp.swift in Sources */,
 				2F6A8D822BF72323D1AD2A1C /* BadmintonService.swift in Sources */,
+				EEDE9DB954785504C0F6FF3B /* PaymentsView.swift in Sources */,
+				16D6FDE7FD50DAB0EBA870B6 /* PaymentsViewModel.swift in Sources */,
 				8FE67F3307AD4EC2FED78846 /* SessionListView.swift in Sources */,
 				2DC1FA64F3779F0206BD7D91 /* SessionsViewModel.swift in Sources */,
 			);
