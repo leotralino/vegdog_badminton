@@ -66,3 +66,5 @@ This creates:
 - If code signing fails, set your team in Xcode target settings.
 - API base URL defaults to `https://api.example.com`.
 - Override API base URL at runtime with env var: `API_BASE_URL`.
+- Local development uses mock service by default (`USE_MOCK_SERVICE=true`).
+- To force real API mode, run with env var `USE_MOCK_SERVICE=false`.
