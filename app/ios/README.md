@@ -27,10 +27,11 @@ Create Xcode project named `BadmintonFriends` and map source groups to this fold
 
 ## Implemented Feature Scaffold
 - `App/BadmintonFriendsApp.swift`: SwiftUI app entry
-- `App/AppRootView.swift`: auth-gated root routing
+- `App/AppRootView.swift`: auth-gated root routing + tab shell
 - `App/AppState.swift`: in-memory auth/session state
 - `Features/Auth/AuthViewModel.swift` + `Features/Auth/AuthView.swift`: login UI with WeChat code input
 - `Features/Sessions/SessionsViewModel.swift` + `Features/Sessions/SessionListView.swift`: session list + join/withdraw/finalize actions
+- `Features/Payments/PaymentsViewModel.swift` + `Features/Payments/PaymentsView.swift`: payment methods + records management UI by session ID
 
 ## Xcode Project Generation
 This repo uses XcodeGen so project files stay reproducible.
