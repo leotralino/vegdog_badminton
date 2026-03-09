@@ -26,7 +26,11 @@ struct AppRootView: View {
                         Label("sessions.title", systemImage: "calendar")
                     }
 
-                    HistoryView(viewModel: historyViewModel)
+                    HistoryView(
+                        viewModel: historyViewModel,
+                        service: container.service,
+                        currentUserID: appState.currentUser?.id
+                    )
                     .tabItem {
                         Label("history.title", systemImage: "clock.arrow.circlepath")
                     }

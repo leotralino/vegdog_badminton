@@ -16,6 +16,7 @@
 "sessions.initiator" = "Initiator";
 "sessions.courts" = "Courts";
 "sessions.max" = "Max";
+"sessions.max_people_label" = "Max Participants";
 "sessions.details" = "Details";
 "sessions.join" = "Join";
 "sessions.withdraw" = "Withdraw";
@@ -58,6 +59,9 @@
 "sessions.detail.withdrawn" = "Withdrawn";
 "sessions.detail.withdrawn_normal" = "Withdrawn";
 "sessions.detail.withdrawn_late" = "Late Withdraw";
+"sessions.detail.payment_status" = "Payment Status";
+"sessions.detail.expand" = "Expand";
+"sessions.detail.collapse" = "Collapse";
 "sessions.detail.locked_notice" = "Queue is locked. Join/withdraw is disabled.";
 "sessions.detail.late_play" = "Late Play";
 "sessions.detail.late_played" = "Played Late";

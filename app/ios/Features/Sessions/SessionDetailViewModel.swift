@@ -3,6 +3,7 @@ import SwiftUI
 @MainActor
 final class SessionDetailViewModel: ObservableObject {
     @Published var detail: SessionDetail?
+    @Published var paymentRecords: [PaymentRecord] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var newAdminUserID: String = ""
@@ -47,7 +48,10 @@ final class SessionDetailViewModel: ObservableObject {
         defer { isLoading = false }
 
         do {
-            detail = try await service.getSessionDetail(sessionID: sessionID)
+            async let detailTask = service.getSessionDetail(sessionID: sessionID)
+            async let paymentTask = service.listPaymentRecords(sessionID: sessionID)
+            detail = try await detailTask
+            paymentRecords = try await paymentTask
         } catch {
             errorMessage = error.localizedDescription
         }

@@ -83,7 +83,8 @@ struct SessionDetailView: View {
                                 }
                             }
                         }
-                        .doodleCard()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .notionCard()
 
                         if !withdrawnParticipants(detail).isEmpty {
                             VStack(alignment: .leading, spacing: 8) {
@@ -103,7 +104,29 @@ struct SessionDetailView: View {
                                     }
                                 }
                             }
-                            .doodleCard()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .notionCard()
+                        }
+
+                        if detail.status == .locked {
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("sessions.detail.payment_status")
+                                    .font(.headline)
+                                ForEach(liableParticipants(detail)) { participant in
+                                    HStack {
+                                        Text(participant.displayName)
+                                        Spacer()
+                                        Text(paymentStatusText(for: participant.id))
+                                            .font(.footnote.weight(.semibold))
+                                            .padding(.horizontal, 8)
+                                            .padding(.vertical, 4)
+                                            .background(paymentStatusColor(for: participant.id).opacity(0.2))
+                                            .clipShape(Capsule())
+                                    }
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .notionCard()
                         }
 
                         if detail.status != .locked {
@@ -117,6 +140,7 @@ struct SessionDetailView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 }
             } else {
@@ -157,6 +181,12 @@ struct SessionDetailView: View {
 
     private func waitlistParticipants(_ detail: SessionDetail) -> [SessionParticipant] {
         activeParticipants(detail).filter { $0.status == .waitlist }
+    }
+
+    private func liableParticipants(_ detail: SessionDetail) -> [SessionParticipant] {
+        detail.participants
+            .filter { $0.status == .joined || $0.status == .lateWithdraw }
+            .sorted { $0.queuePosition < $1.queuePosition }
     }
 
     private func withdrawnParticipants(_ detail: SessionDetail) -> [SessionParticipant] {
@@ -212,31 +242,80 @@ struct SessionDetailView: View {
             return ""
         }
     }
+
+    private func paymentStatus(for participantID: String) -> PaymentStatus? {
+        viewModel.paymentRecords.first(where: { $0.participantID == participantID })?.status
+    }
+
+    private func paymentStatusText(for participantID: String) -> String {
+        switch paymentStatus(for: participantID) {
+        case .paid:
+            return String(localized: "payments.status_paid")
+        case .waived:
+            return String(localized: "payments.status_waived")
+        case .unpaid:
+            return String(localized: "payments.status_unpaid")
+        case nil:
+            return String(localized: "payments.status_unpaid")
+        }
+    }
+
+    private func paymentStatusColor(for participantID: String) -> Color {
+        switch paymentStatus(for: participantID) {
+        case .paid:
+            return .green
+        case .waived:
+            return .orange
+        case .unpaid, nil:
+            return .red
+        }
+    }
 }
 
 private struct SessionMetaCard: View {
     let detail: SessionDetail
     let canLock: Bool
     let onLock: () -> Void
+    @State private var isExpanded = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             Text(detail.title)
                 .font(.title3.weight(.semibold))
-            Text("\(detail.startsAt.formatted(date: .abbreviated, time: .shortened)) · \(detail.location)")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Text("\(String(localized: "sessions.initiator")): \(detail.initiatorUser.nickname)")
-                .font(.footnote)
-            Text("\(String(localized: "sessions.max")): \(detail.maxParticipants)")
-                .font(.footnote)
+            VStack(alignment: .leading, spacing: 8) {
+                metaRow(systemIcon: "calendar", value: DateDisplay.session(detail.startsAt), expanded: true)
+                metaRow(systemIcon: "mappin.and.ellipse", value: detail.location, expanded: isExpanded)
+                HStack(spacing: 8) {
+                    Image(systemName: "person.crop.circle")
+                    AvatarView(avatarURL: detail.initiatorUser.avatarURL, size: 22)
+                    Text("\(String(localized: "sessions.initiator")): \(detail.initiatorUser.nickname)")
+                }
+                .font(.subheadline.weight(.semibold))
+                metaRow(systemIcon: "person.3", value: "\(String(localized: "sessions.max_people_label")): \(detail.maxParticipants)", expanded: true)
+            }
+            Button(isExpanded ? "sessions.detail.collapse" : "sessions.detail.expand") {
+                isExpanded.toggle()
+            }
+            .font(.footnote)
             if canLock {
                 Button("sessions.finalize", action: onLock)
                     .buttonStyle(.borderedProminent)
             }
         }
-        .padding(14)
-        .doodleCard()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .notionCard()
+    }
+
+    private func metaRow(systemIcon: String, value: String, expanded: Bool) -> some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: systemIcon)
+            Text(value)
+                .lineLimit(expanded ? nil : 1)
+                .fixedSize(horizontal: false, vertical: expanded)
+                .multilineTextAlignment(.leading)
+        }
+        .font(.subheadline.weight(.semibold))
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -266,24 +345,29 @@ private struct QueueParticipantRow: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
-            Spacer()
-            if showLateControl {
-                Button {
-                    onToggleLate()
-                } label: {
-                    Image(systemName: participant.stayedLate ? "checkmark.square.fill" : "square")
-                        .foregroundStyle(canRecordLate ? .green : .gray)
+            Spacer(minLength: 8)
+            HStack(spacing: 8) {
+                if showLateControl {
+                    Button {
+                        onToggleLate()
+                    } label: {
+                        Image(systemName: participant.stayedLate ? "checkmark.square.fill" : "square")
+                            .foregroundStyle(canRecordLate ? .green : .gray)
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(!canRecordLate)
                 }
-                .buttonStyle(.bordered)
-                .disabled(!canRecordLate)
-            }
-            if canRemove {
-                Button(action: onRemove) {
-                    Image(systemName: "minus.circle.fill")
-                        .foregroundStyle(.red)
+                if canRemove {
+                    Button(action: onRemove) {
+                        Image(systemName: "minus.circle.fill")
+                            .foregroundStyle(.red)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .buttonStyle(.plain)
             }
+            .frame(width: 88, alignment: .trailing)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 2)
     }
 }

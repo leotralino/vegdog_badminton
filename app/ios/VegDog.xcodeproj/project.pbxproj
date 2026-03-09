@@ -24,6 +24,7 @@
 		6348F5C9E7D3889AA78ED128 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 844B09067EAB458DFE19A7FC /* InfoPlist.strings */; };
 		6D950F79F603B4CB644D7A1C /* MockBadmintonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16E53A55225D4361903ECC21 /* MockBadmintonService.swift */; };
 		7B01EDADA86F64436DBE54BA /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9661392505507D4C2279C536 /* AppEnvironment.swift */; };
+		802891F9681015C3CFA8DDC2 /* SessionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CB3121D677B7EAE3CB84E2 /* SessionCardView.swift */; };
 		94BE48B744B917CE83199D43 /* SessionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB37DB6CE94DC3D72C8765 /* SessionListView.swift */; };
 		9633E70141028E2C57BBBF63 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FFCA4275C50BF4B7DA5651 /* AvatarView.swift */; };
 		9A521D641716C9313FB603F0 /* SessionCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EE67440A840B5C3479C159 /* SessionCreateView.swift */; };
@@ -34,6 +35,7 @@
 		D7400BE9A6435279DBE11E0E /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E350339846047FB2BE64A15C /* APIEndpoint.swift */; };
 		D89F32949B86B0DD506DBCD9 /* CuteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CD6F9C2FC3B47EA394D8A35 /* CuteTheme.swift */; };
 		DD52054B70DD6189BB7E0897 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E23D12550623941D68F1D79 /* AuthViewModel.swift */; };
+		E527983D97CE52128F4EAC9D /* DateDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20755808AA9549E4CB61B137 /* DateDisplay.swift */; };
 		E77B5DAD69DF1F294944F662 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FF1FF7F5EAD43A3E49E839 /* HistoryView.swift */; };
 		E95F3D576826E620884167A2 /* VegDogLogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF33C3D2626B932FC11F8E57 /* VegDogLogoView.swift */; };
 		E9CF5F34572A2088E300D89B /* LanguageToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFD72301744446A6C95D8CD /* LanguageToggleButton.swift */; };
@@ -55,6 +57,7 @@
 		14BB37DB6CE94DC3D72C8765 /* SessionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListView.swift; sourceTree = "<group>"; };
 		16E53A55225D4361903ECC21 /* MockBadmintonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBadmintonService.swift; sourceTree = "<group>"; };
 		1E000A9E293E41A1FFAA612C /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
+		20755808AA9549E4CB61B137 /* DateDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateDisplay.swift; sourceTree = "<group>"; };
 		231E17B6FF66E3ADA69B1F32 /* vegdog_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vegdog_logo.png; sourceTree = "<group>"; };
 		246A5EC8B3E220CEADB05A3F /* SessionCreateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCreateViewModel.swift; sourceTree = "<group>"; };
 		25CA872A2D70EDCBBC518DC1 /* PaymentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsViewModel.swift; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 		DF9181A2393133D2725214AD /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		E1470B05910DD97360830861 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E350339846047FB2BE64A15C /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
+		F7CB3121D677B7EAE3CB84E2 /* SessionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCardView.swift; sourceTree = "<group>"; };
 		FCF795413B97DC5C29D92EC2 /* vegdog_logo.svg */ = {isa = PBXFileReference; path = vegdog_logo.svg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -128,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				0D8F2A0E14BE42845CEB1963 /* .gitkeep */,
+				F7CB3121D677B7EAE3CB84E2 /* SessionCardView.swift */,
 				D2EE67440A840B5C3479C159 /* SessionCreateView.swift */,
 				246A5EC8B3E220CEADB05A3F /* SessionCreateViewModel.swift */,
 				146AF566A91AAA837A23A969 /* SessionDetailView.swift */,
@@ -223,6 +228,7 @@
 				3A833EE9822BCC1EE8947ED9 /* .gitkeep */,
 				9661392505507D4C2279C536 /* AppEnvironment.swift */,
 				0CD6F9C2FC3B47EA394D8A35 /* CuteTheme.swift */,
+				20755808AA9549E4CB61B137 /* DateDisplay.swift */,
 				B2A176853B661294601D1F37 /* LanguageSettings.swift */,
 				0CFD72301744446A6C95D8CD /* LanguageToggleButton.swift */,
 			);
@@ -346,6 +352,7 @@
 				9633E70141028E2C57BBBF63 /* AvatarView.swift in Sources */,
 				1F9629DAAFB20B8F5C007BE4 /* BadmintonService.swift in Sources */,
 				D89F32949B86B0DD506DBCD9 /* CuteTheme.swift in Sources */,
+				E527983D97CE52128F4EAC9D /* DateDisplay.swift in Sources */,
 				E77B5DAD69DF1F294944F662 /* HistoryView.swift in Sources */,
 				F669AFA4E53FCB6860CFE963 /* HistoryViewModel.swift in Sources */,
 				37995E3868C24A1777672019 /* LanguageSettings.swift in Sources */,
@@ -353,6 +360,7 @@
 				6D950F79F603B4CB644D7A1C /* MockBadmintonService.swift in Sources */,
 				A909BDE4DF1CDC837021EBFD /* PaymentsView.swift in Sources */,
 				3FABC35A0ACFAA4B896AE732 /* PaymentsViewModel.swift in Sources */,
+				802891F9681015C3CFA8DDC2 /* SessionCardView.swift in Sources */,
 				9A521D641716C9313FB603F0 /* SessionCreateView.swift in Sources */,
 				EC31C09D16D70160E459B69D /* SessionCreateViewModel.swift in Sources */,
 				059F490BDA4E919FCD68C047 /* SessionDetailView.swift in Sources */,

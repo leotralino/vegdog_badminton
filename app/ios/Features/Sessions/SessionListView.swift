@@ -12,19 +12,23 @@ struct SessionListView: View {
             Group {
                 if viewModel.isLoading && viewModel.sessions.isEmpty {
                     ProgressView("sessions.loading")
-                } else if viewModel.sessions.isEmpty {
+                } else if visibleSessions.isEmpty {
                     ContentUnavailableView("sessions.empty_title", systemImage: "calendar")
                 } else {
-                    List(viewModel.sessions) { session in
-                        SessionRowView(session: session)
+                    List(visibleSessions) { session in
+                        SessionCardView(session: session)
                             .contentShape(Rectangle())
                             .onTapGesture {
                                 selectedSessionID = session.id
                             }
+                            .listRowInsets(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                            .listRowBackground(Color.clear)
                     }
                     .listStyle(.plain)
+                    .scrollContentBackground(.hidden)
                 }
             }
+            .background(CuteTheme.mint.opacity(0.12))
             .navigationTitle("sessions.title")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -86,32 +90,9 @@ struct SessionListView: View {
             }
         }
     }
-}
 
-private struct SessionRowView: View {
-    let session: Session
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(session.title)
-                .font(.headline)
-
-            Text("\(session.location) · \(session.startsAt.formatted(date: .abbreviated, time: .shortened))")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-
-            Text("\(String(localized: "sessions.courts")): \(session.courtCount)  \(String(localized: "sessions.max")): \(session.maxParticipants)")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-            Text("\(String(localized: "sessions.initiator")): \(session.initiatorUser.nickname)")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-
-            Text("\(String(localized: "sessions.withdraw_by")): \(session.withdrawDeadline.formatted(date: .abbreviated, time: .shortened))")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.vertical, 4)
+    private var visibleSessions: [Session] {
+        viewModel.sessions.filter { !DateDisplay.shouldMoveToHistory($0) }
     }
 }
 

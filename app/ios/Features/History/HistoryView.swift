@@ -2,6 +2,8 @@ import SwiftUI
 
 struct HistoryView: View {
     @ObservedObject var viewModel: HistoryViewModel
+    let service: BadmintonServiceProtocol
+    let currentUserID: String?
 
     var body: some View {
         NavigationStack {
@@ -16,7 +18,18 @@ struct HistoryView: View {
                                     .foregroundStyle(.secondary)
                             } else {
                                 ForEach(viewModel.participatedSessions) { session in
-                                    SessionHistoryRow(session: session)
+                                    NavigationLink {
+                                        SessionDetailView(
+                                            viewModel: SessionDetailViewModel(
+                                                sessionID: session.id,
+                                                currentUserID: currentUserID,
+                                                service: service
+                                            )
+                                        )
+                                    } label: {
+                                        SessionCardView(session: session)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
                             }
                         }
@@ -27,11 +40,23 @@ struct HistoryView: View {
                                     .foregroundStyle(.secondary)
                             } else {
                                 ForEach(viewModel.pastSessions) { session in
-                                    SessionHistoryRow(session: session)
+                                    NavigationLink {
+                                        SessionDetailView(
+                                            viewModel: SessionDetailViewModel(
+                                                sessionID: session.id,
+                                                currentUserID: currentUserID,
+                                                service: service
+                                            )
+                                        )
+                                    } label: {
+                                        SessionCardView(session: session)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
                             }
                         }
                     }
+                    .listRowSeparator(.hidden)
                 }
             }
             .navigationTitle("history.title")
@@ -63,23 +88,5 @@ struct HistoryView: View {
                 }
             )
         }
-    }
-}
-
-private struct SessionHistoryRow: View {
-    let session: Session
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(session.title)
-                .font(.headline)
-            Text(session.startsAt.formatted(date: .abbreviated, time: .shortened))
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-            Text(session.location)
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.vertical, 2)
     }
 }

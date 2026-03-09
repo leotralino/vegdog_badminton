@@ -16,6 +16,7 @@
 "sessions.initiator" = "发起人";
 "sessions.courts" = "场地";
 "sessions.max" = "上限";
+"sessions.max_people_label" = "人数上限";
 "sessions.details" = "详情";
 "sessions.join" = "加入";
 "sessions.withdraw" = "退出";
@@ -58,6 +59,9 @@
 "sessions.detail.withdrawn" = "已退出";
 "sessions.detail.withdrawn_normal" = "已退出";
 "sessions.detail.withdrawn_late" = "晚退";
+"sessions.detail.payment_status" = "付款状态";
+"sessions.detail.expand" = "展开";
+"sessions.detail.collapse" = "收起";
 "sessions.detail.locked_notice" = "队列已锁定，无法再加入或退出。";
 "sessions.detail.late_play" = "加时到场";
 "sessions.detail.late_played" = "已标记加时";

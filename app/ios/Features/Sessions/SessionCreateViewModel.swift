@@ -4,8 +4,8 @@ import SwiftUI
 final class SessionCreateViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var location: String = ""
-    @Published var startsAt: Date = .now.addingTimeInterval(3600)
-    @Published var withdrawDeadline: Date = .now
+    @Published var startsAt: Date
+    @Published var withdrawDeadline: Date
     @Published var courtCount: String = "2"
     @Published var maxParticipants: String = "8"
     @Published var feeMode: FeeMode = .fixedPerPerson
@@ -19,9 +19,29 @@ final class SessionCreateViewModel: ObservableObject {
 
     init(service: BadmintonServiceProtocol) {
         self.service = service
+        let defaults = Self.defaultSchedule()
+        self.startsAt = defaults.startsAt
+        self.withdrawDeadline = defaults.withdrawDeadline
+    }
+
+    func normalizeStartTime() {
+        startsAt = Self.roundToQuarterHour(startsAt)
+        if withdrawDeadline > startsAt {
+            withdrawDeadline = startsAt
+        }
+    }
+
+    func normalizeWithdrawDeadline() {
+        withdrawDeadline = Self.roundToQuarterHour(withdrawDeadline)
+        if withdrawDeadline > startsAt {
+            withdrawDeadline = startsAt
+        }
     }
 
     func submit() async -> Bool {
+        normalizeStartTime()
+        normalizeWithdrawDeadline()
+
         let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let trimmedLocation = location.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -85,5 +105,40 @@ final class SessionCreateViewModel: ObservableObject {
             errorMessage = error.localizedDescription
             return false
         }
+    }
+
+    private static func defaultSchedule(now: Date = Date()) -> (startsAt: Date, withdrawDeadline: Date) {
+        let calendar = Calendar(identifier: .gregorian)
+        var fridayComponents = DateComponents()
+        fridayComponents.weekday = 6
+        fridayComponents.hour = 20
+        fridayComponents.minute = 0
+        var nextFriday = calendar.nextDate(
+            after: now,
+            matching: fridayComponents,
+            matchingPolicy: .nextTimePreservingSmallerComponents
+        ) ?? now.addingTimeInterval(7 * 24 * 60 * 60)
+        nextFriday = roundToQuarterHour(nextFriday)
+
+        var withdraw = calendar.date(byAdding: .day, value: -2, to: nextFriday) ?? now
+        withdraw = calendar.date(bySettingHour: 17, minute: 0, second: 0, of: withdraw) ?? withdraw
+        withdraw = roundToQuarterHour(withdraw)
+        return (nextFriday, min(withdraw, nextFriday))
+    }
+
+    private static func roundToQuarterHour(_ date: Date) -> Date {
+        let calendar = Calendar(identifier: .gregorian)
+        var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let minute = components.minute ?? 0
+        let rounded = Int((Double(minute) / 15.0).rounded()) * 15
+        if rounded == 60 {
+            let normalized = calendar.date(byAdding: .hour, value: 1, to: date) ?? date
+            components = calendar.dateComponents([.year, .month, .day, .hour], from: normalized)
+            components.minute = 0
+        } else {
+            components.minute = rounded
+        }
+        components.second = 0
+        return calendar.date(from: components) ?? date
     }
 }

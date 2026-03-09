@@ -26,9 +26,8 @@ final class HistoryViewModel: ObservableObject {
 
         do {
             let sessions = try await service.listSessions()
-            let now = Date()
             pastSessions = sessions
-                .filter { $0.startsAt < now }
+                .filter { DateDisplay.shouldMoveToHistory($0) }
                 .sorted { $0.startsAt > $1.startsAt }
 
             guard let currentUserID else {
@@ -44,7 +43,7 @@ final class HistoryViewModel: ObservableObject {
                 }
             }
             participatedSessions = sessions
-                .filter { participatedIDs.contains($0.id) }
+                .filter { participatedIDs.contains($0.id) && DateDisplay.shouldMoveToHistory($0) }
                 .sorted { $0.startsAt > $1.startsAt }
         } catch {
             errorMessage = error.localizedDescription

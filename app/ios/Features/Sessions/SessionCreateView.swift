@@ -14,8 +14,34 @@ struct SessionCreateView: View {
                 }
 
                 Section("sessions.create.schedule") {
-                    DatePicker("sessions.create.starts_at", selection: $viewModel.startsAt)
-                    DatePicker("sessions.create.withdraw_deadline", selection: $viewModel.withdrawDeadline)
+                    DatePicker(
+                        "sessions.create.starts_at",
+                        selection: Binding(
+                            get: { viewModel.startsAt },
+                            set: { newValue in
+                                viewModel.startsAt = newValue
+                                viewModel.normalizeStartTime()
+                            }
+                        ),
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    Text(DateDisplay.session(viewModel.startsAt))
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    DatePicker(
+                        "sessions.create.withdraw_deadline",
+                        selection: Binding(
+                            get: { viewModel.withdrawDeadline },
+                            set: { newValue in
+                                viewModel.withdrawDeadline = newValue
+                                viewModel.normalizeWithdrawDeadline()
+                            }
+                        ),
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    Text(DateDisplay.session(viewModel.withdrawDeadline))
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
 
                 Section("sessions.create.capacity") {

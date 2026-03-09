@@ -423,10 +423,12 @@ final class MockBadmintonService: BadmintonServiceProtocol {
         let now = Date()
         let fee = FeeRule(mode: .fixedPerPerson, amount: 20, lateWithdrawRatio: 1)
 
-        let alice = User(id: "user_alice", nickname: "Alice", avatarURL: nil, wechatOpenID: nil, wechatUnionID: nil)
-        let bob = User(id: "user_bob", nickname: "Bob", avatarURL: nil, wechatOpenID: nil, wechatUnionID: nil)
-        userDirectory[alice.id] = alice
-        userDirectory[bob.id] = bob
+        let alice = User(id: "user_alice", nickname: "Alice", avatarURL: "https://i.pravatar.cc/120?img=11", wechatOpenID: nil, wechatUnionID: nil)
+        let bob = User(id: "user_bob", nickname: "Bob", avatarURL: "https://i.pravatar.cc/120?img=12", wechatOpenID: nil, wechatUnionID: nil)
+        let cathy = User(id: "user_cathy", nickname: "Cathy", avatarURL: "https://i.pravatar.cc/120?img=13", wechatOpenID: nil, wechatUnionID: nil)
+        let david = User(id: "user_david", nickname: "David", avatarURL: "https://i.pravatar.cc/120?img=14", wechatOpenID: nil, wechatUnionID: nil)
+        let emma = User(id: "user_emma", nickname: "Emma", avatarURL: "https://i.pravatar.cc/120?img=15", wechatOpenID: nil, wechatUnionID: nil)
+        [alice, bob, cathy, david, emma].forEach { userDirectory[$0.id] = $0 }
 
         let s1 = Session(
             id: "session_seed_1",
@@ -458,15 +460,78 @@ final class MockBadmintonService: BadmintonServiceProtocol {
             initiatorUser: bob,
             adminUserIDs: [bob.id]
         )
-        sessions = [s1, s2]
+        let s3 = Session(
+            id: "session_seed_3",
+            title: "Weekday Ladder Match",
+            startsAt: now.addingTimeInterval(60 * 60 * 60),
+            endsAt: nil,
+            location: "Palo Alto Indoor Court A",
+            courtCount: 2,
+            maxParticipants: 6,
+            withdrawDeadline: now.addingTimeInterval(60 * 60 * 40),
+            finalizeAt: nil,
+            status: .open,
+            feeRule: fee,
+            initiatorUser: cathy,
+            adminUserIDs: [cathy.id]
+        )
+        let s4 = Session(
+            id: "session_seed_4",
+            title: "Last Week Friendly (Ended)",
+            startsAt: now.addingTimeInterval(-60 * 60 * 48),
+            endsAt: now.addingTimeInterval(-60 * 60 * 45),
+            location: "Mountain View Sports Center Court 3",
+            courtCount: 2,
+            maxParticipants: 8,
+            withdrawDeadline: now.addingTimeInterval(-60 * 60 * 72),
+            finalizeAt: now.addingTimeInterval(-60 * 60 * 50),
+            status: .locked,
+            feeRule: fee,
+            initiatorUser: alice,
+            adminUserIDs: [alice.id]
+        )
+        sessions = [s1, s2, s3, s4]
         adminsBySessionID[s1.id] = [SessionAdmin(id: UUID().uuidString, userID: alice.id, nickname: alice.nickname, addedAt: now)]
         adminsBySessionID[s2.id] = [SessionAdmin(id: UUID().uuidString, userID: bob.id, nickname: bob.nickname, addedAt: now)]
+        adminsBySessionID[s3.id] = [SessionAdmin(id: UUID().uuidString, userID: cathy.id, nickname: cathy.nickname, addedAt: now)]
+        adminsBySessionID[s4.id] = [SessionAdmin(id: UUID().uuidString, userID: alice.id, nickname: alice.nickname, addedAt: now)]
 
-        participantsBySessionID[s1.id] = []
-        participantsBySessionID[s2.id] = []
+        participantsBySessionID[s1.id] = [
+            SessionParticipant(id: "p_s1_1", sessionID: s1.id, user: alice, entryName: "Alice", createdByUserID: alice.id, queuePosition: 1, status: .joined, joinedAt: now.addingTimeInterval(-3600), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false),
+            SessionParticipant(id: "p_s1_2", sessionID: s1.id, user: bob, entryName: "Bob", createdByUserID: bob.id, queuePosition: 2, status: .joined, joinedAt: now.addingTimeInterval(-3400), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false),
+            SessionParticipant(id: "p_s1_3", sessionID: s1.id, user: emma, entryName: "Emma +1", createdByUserID: emma.id, queuePosition: 3, status: .joined, joinedAt: now.addingTimeInterval(-3200), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false),
+            SessionParticipant(id: "p_s1_4", sessionID: s1.id, user: david, entryName: "David", createdByUserID: david.id, queuePosition: 4, status: .waitlist, joinedAt: now.addingTimeInterval(-3000), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false)
+        ]
+        participantsBySessionID[s2.id] = [
+            SessionParticipant(id: "p_s2_1", sessionID: s2.id, user: bob, entryName: "Bob", createdByUserID: bob.id, queuePosition: 1, status: .joined, joinedAt: now.addingTimeInterval(-2600), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false),
+            SessionParticipant(id: "p_s2_2", sessionID: s2.id, user: cathy, entryName: "Cathy", createdByUserID: cathy.id, queuePosition: 2, status: .joined, joinedAt: now.addingTimeInterval(-2500), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false)
+        ]
+        participantsBySessionID[s3.id] = [
+            SessionParticipant(id: "p_s3_1", sessionID: s3.id, user: cathy, entryName: "Cathy", createdByUserID: cathy.id, queuePosition: 1, status: .joined, joinedAt: now.addingTimeInterval(-2300), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false),
+            SessionParticipant(id: "p_s3_2", sessionID: s3.id, user: david, entryName: "David", createdByUserID: david.id, queuePosition: 2, status: .joined, joinedAt: now.addingTimeInterval(-2200), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false),
+            SessionParticipant(id: "p_s3_3", sessionID: s3.id, user: emma, entryName: "Emma", createdByUserID: emma.id, queuePosition: 3, status: .joined, joinedAt: now.addingTimeInterval(-2100), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false)
+        ]
+        participantsBySessionID[s4.id] = [
+            SessionParticipant(id: "p_s4_1", sessionID: s4.id, user: alice, entryName: "Alice", createdByUserID: alice.id, queuePosition: 1, status: .joined, joinedAt: now.addingTimeInterval(-60 * 60 * 60), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: true),
+            SessionParticipant(id: "p_s4_2", sessionID: s4.id, user: bob, entryName: "Bob", createdByUserID: bob.id, queuePosition: 2, status: .joined, joinedAt: now.addingTimeInterval(-60 * 60 * 59), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: false),
+            SessionParticipant(id: "p_s4_3", sessionID: s4.id, user: cathy, entryName: "Cathy", createdByUserID: cathy.id, queuePosition: 3, status: .joined, joinedAt: now.addingTimeInterval(-60 * 60 * 58), withdrewAt: nil, isReplacement: false, replacedParticipantID: nil, stayedLate: true),
+            SessionParticipant(id: "p_s4_4", sessionID: s4.id, user: david, entryName: "David", createdByUserID: david.id, queuePosition: 4, status: .lateWithdraw, joinedAt: now.addingTimeInterval(-60 * 60 * 57), withdrewAt: now.addingTimeInterval(-60 * 60 * 49), isReplacement: false, replacedParticipantID: nil, stayedLate: false)
+        ]
         paymentMethodsBySessionID[s1.id] = []
         paymentMethodsBySessionID[s2.id] = []
-        paymentRecordsBySessionID[s1.id] = []
+        paymentMethodsBySessionID[s3.id] = []
+        paymentMethodsBySessionID[s4.id] = []
+        paymentRecordsBySessionID[s1.id] = [
+            PaymentRecord(id: "pay_s1_1", sessionID: s1.id, participantID: "p_s1_1", baseFeeAmount: 20, lateUsageFeeAmount: 0, totalAmount: 20, status: .paid, updatedAt: now),
+            PaymentRecord(id: "pay_s1_2", sessionID: s1.id, participantID: "p_s1_2", baseFeeAmount: 20, lateUsageFeeAmount: 0, totalAmount: 20, status: .unpaid, updatedAt: now)
+        ]
         paymentRecordsBySessionID[s2.id] = []
+        paymentRecordsBySessionID[s3.id] = []
+        paymentRecordsBySessionID[s4.id] = [
+            PaymentRecord(id: "pay_s4_1", sessionID: s4.id, participantID: "p_s4_1", baseFeeAmount: 20, lateUsageFeeAmount: 6, totalAmount: 26, status: .paid, updatedAt: now),
+            PaymentRecord(id: "pay_s4_2", sessionID: s4.id, participantID: "p_s4_2", baseFeeAmount: 20, lateUsageFeeAmount: 0, totalAmount: 20, status: .paid, updatedAt: now),
+            PaymentRecord(id: "pay_s4_3", sessionID: s4.id, participantID: "p_s4_3", baseFeeAmount: 20, lateUsageFeeAmount: 6, totalAmount: 26, status: .unpaid, updatedAt: now),
+            PaymentRecord(id: "pay_s4_4", sessionID: s4.id, participantID: "p_s4_4", baseFeeAmount: 20, lateUsageFeeAmount: 0, totalAmount: 20, status: .waived, updatedAt: now)
+        ]
     }
 }
